@@ -1,6 +1,6 @@
-# ASPA - Advanced Studies in Public Administration
+# ASPA - Advanced Statistics for Physical Analysis
 
-This directory contains all materials related to the Advanced Studies in Public Administration course.
+This directory contains all materials related to the Advanced Statistics for Physical Analysis course.
 
 ## Folder Structure
 
