@@ -1,0 +1,42 @@
+# Introduction to the R programming language
+
+## First lecture
+### Plot example
+```{r}
+#| label: setup
+#| include: false
+x <- rnorm(10000, mean=2,sd=1) # Array of random numbers
+MU <- mean(x)
+SD <- sd(x)
+X <- seq(from =-8, to=8,by= 0.5 )
+Y <- dnorm(X,mean=MU, sd=SD)
+hist(x, freq=FALSE)
+lines(X,Y)
+```
+### Help and examples
+
+```{r}
+?plot
+```
+
+```{r}
+example(hist)
+```
+## Third lecture
+Only operations with integrants are exact
+```{r}
+u <- sqrt(2); u*u ==2
+u*u-2
+all.equal(u*u,2)
+identical(u*u,2)
+```
+
+### If-else statements
+
+
+```{r}
+x <- 45; y<- 50
+if (x<y){
+    
+}
+```
