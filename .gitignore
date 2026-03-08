@@ -1,1 +1,4 @@
 professor_notes/
+*.js
+*.css
+*.woff
