@@ -1,0 +1,361 @@
+---
+title: "Chapter 6 - Graphics in R"
+subtitle: "Data Visualization with Base R and ggplot2"
+number-sections: true
+---
+
+## Learning Objectives
+
+After completing this chapter, you should be able to:
+
+- Create various plots using base R graphics
+- Use ggplot2 for advanced visualizations
+- Customize plot appearance
+- Save plots to files
+- Create publication-quality figures
+
+## Overview
+
+::: {.callout-note}
+This chapter covers material from the lecture slides: `Advanced_Statistics_R_graphics.pdf`
+:::
+
+## Base R Graphics
+
+### Basic Plot Function
+
+The `plot()` function is the foundation of R graphics:
+
+```{r}
+# Simple scatter plot
+x <- 1:10
+y <- x^2
+plot(x, y)
+
+# Customized plot
+plot(x, y,
+  main = "Quadratic Function",    # Title
+  xlab = "x values",              # X-axis label
+  ylab = "y values",              # Y-axis label
+  pch = 19,                       # Point character (solid circle)
+  col = "blue",                   # Color
+  cex = 1.5                       # Point size
+)
+```
+
+### Plot Types
+
+```{r}
+# Line plot
+plot(x, y, type = "l", col = "red")
+
+# Both points and lines
+plot(x, y, type = "b", pch = 19)
+
+# Common type values:
+# "p" = points (default)
+# "l" = lines
+# "b" = both
+# "o" = overplotted
+# "h" = histogram-like
+# "s" = stairs
+# "n" = no plotting (just axes)
+```
+
+### Point Characters and Colors
+
+```{r}
+# All point types
+plot(1:25, rep(1, 25), pch = 1:25, cex = 2)
+text(1:25, rep(0.8, 25), labels = 1:25)
+
+# Colors
+plot(x, y, col = "red")           # Named color
+plot(x, y, col = "#FF5733")       # Hex color
+plot(x, y, col = 2)               # Color index
+
+# Color palettes
+colors <- rainbow(10)
+plot(1:10, col = colors, pch = 19, cex = 3)
+```
+
+### Adding Elements to Plots
+
+```{r}
+# Base plot
+x <- seq(-3, 3, length.out = 100)
+y <- dnorm(x)
+plot(x, y, type = "l", main = "Standard Normal Distribution")
+
+# Add points
+points(0, dnorm(0), pch = 19, col = "red", cex = 2)
+
+# Add lines
+abline(v = 0, col = "gray", lty = 2)  # Vertical line
+abline(h = 0, col = "gray", lty = 2)  # Horizontal line
+
+# Add text
+text(0, dnorm(0) + 0.02, "Mean", pos = 3)
+
+# Add legend
+legend("topright",
+       legend = c("Density", "Mean"),
+       col = c("black", "red"),
+       lty = c(1, NA),
+       pch = c(NA, 19))
+
+# Add arrows
+arrows(-2, 0.2, -1, dnorm(-1), length = 0.1)
+```
+
+### Histograms and Density Plots
+
+```{r}
+# Generate data
+set.seed(123)
+data <- rnorm(1000, mean = 50, sd = 10)
+
+# Histogram
+hist(data, breaks = 30,
+     main = "Distribution of Values",
+     xlab = "Value",
+     col = "lightblue",
+     border = "white")
+
+# Add density curve
+hist(data, breaks = 30, probability = TRUE,
+     main = "Histogram with Density",
+     xlab = "Value",
+     col = "lightblue")
+lines(density(data), col = "red", lwd = 2)
+```
+
+### Box Plots
+
+```{r}
+# Generate data
+group1 <- rnorm(100, mean = 50, sd = 10)
+group2 <- rnorm(100, mean = 55, sd = 8)
+group3 <- rnorm(100, mean = 45, sd = 12)
+
+# Create box plot
+boxplot(list(Group1 = group1, Group2 = group2, Group3 = group3),
+        main = "Comparison of Groups",
+        ylab = "Value",
+        col = c("red", "green", "blue"))
+
+# Horizontal box plot
+boxplot(group1, group2, group3,
+        names = c("A", "B", "C"),
+        horizontal = TRUE,
+        col = "lightgreen")
+```
+
+### Bar Plots
+
+```{r}
+# Simple bar plot
+counts <- c(12, 8, 15, 6)
+names(counts) <- c("A", "B", "C", "D")
+barplot(counts, col = "steelblue")
+
+# Grouped bar plot
+data <- matrix(c(12, 8, 15, 6, 9, 11), nrow = 2)
+barplot(data,
+        beside = TRUE,
+        col = c("darkblue", "red"),
+        legend.text = c("Group 1", "Group 2"))
+```
+
+### Multiple Plots
+
+```{r}
+# Layout multiple plots
+par(mfrow = c(2, 2))  # 2 rows, 2 columns
+
+plot(rnorm(100), main = "Plot 1")
+plot(runif(100), main = "Plot 2")
+hist(rnorm(100), main = "Plot 3")
+boxplot(rnorm(100), main = "Plot 4")
+
+par(mfrow = c(1, 1))  # Reset to single plot
+```
+
+## ggplot2 Graphics
+
+ggplot2 is a powerful visualization system based on the grammar of graphics.
+
+### Basic Structure
+
+```{r}
+library(ggplot2)
+
+# Sample data
+df <- data.frame(
+  x = 1:10,
+  y = (1:10)^2,
+  group = rep(c("A", "B"), each = 5)
+)
+
+# Basic ggplot
+ggplot(df, aes(x = x, y = y)) +
+  geom_point()
+
+# Customized plot
+ggplot(df, aes(x = x, y = y, color = group)) +
+  geom_point(size = 3) +
+  geom_line() +
+  labs(title = "Quadratic Growth",
+       x = "Input",
+       y = "Output") +
+  theme_minimal()
+```
+
+### Geometric Objects (Geoms)
+
+```{r}
+# Scatter plot
+ggplot(df, aes(x, y)) + geom_point()
+
+# Line plot
+ggplot(df, aes(x, y)) + geom_line()
+
+# Bar plot
+df_cat <- data.frame(category = c("A", "B", "C"), value = c(10, 20, 15))
+ggplot(df_cat, aes(category, value)) + geom_bar(stat = "identity")
+
+# Histogram
+ggplot(data.frame(x = rnorm(1000)), aes(x)) + geom_histogram(bins = 30)
+
+# Density plot
+ggplot(data.frame(x = rnorm(1000)), aes(x)) + geom_density()
+
+# Box plot
+ggplot(data.frame(group = rep(c("A", "B"), each = 50),
+                  value = c(rnorm(50), rnorm(50, mean = 2))),
+       aes(group, value)) + geom_boxplot()
+
+# Smooth line with confidence interval
+ggplot(df, aes(x, y)) + geom_point() + geom_smooth()
+```
+
+### Aesthetics
+
+```{r}
+# Create sample data
+data <- data.frame(
+  x = rep(1:10, 2),
+  y = c(1:10, (1:10)^1.2),
+  group = rep(c("Linear", "Power"), each = 10),
+  size = rep(c(2, 4), each = 10)
+)
+
+# Aesthetic mappings
+ggplot(data, aes(x = x, y = y)) +
+  geom_point(aes(color = group, size = size)) +
+  geom_line(aes(linetype = group))
+
+# Manual scales
+ggplot(data, aes(x, y, color = group)) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("red", "blue"))
+```
+
+### Facets
+
+```{r}
+# Create faceted data
+facet_data <- data.frame(
+  x = rep(1:10, 6),
+  y = c(rep(1:10, 3), rep((1:10)^1.5, 3)),
+  group = rep(c("A", "B", "C"), each = 20),
+  type = rep(c("Linear", "Power"), each = 10, times = 3)
+)
+
+# Facet by one variable
+ggplot(facet_data, aes(x, y)) +
+  geom_point() +
+  facet_wrap(~ group)
+
+# Facet by two variables
+ggplot(facet_data, aes(x, y, color = group)) +
+  geom_point() +
+  facet_grid(type ~ group)
+```
+
+### Themes
+
+```{r}
+p <- ggplot(df, aes(x, y)) + geom_point()
+
+# Built-in themes
+p + theme_gray()      # Default
+p + theme_bw()        # Black and white
+p + theme_minimal()   # Minimal
+p + theme_classic()   # Classic
+
+# Custom theme
+p + theme(
+  plot.title = element_text(size = 20, face = "bold"),
+  axis.title = element_text(size = 14),
+  axis.text = element_text(size = 12),
+  panel.background = element_rect(fill = "lightgray"),
+  panel.grid.major = element_line(color = "white")
+)
+```
+
+## Saving Plots
+
+```{r, eval=FALSE}
+# Base R - save current plot
+png("plot.png", width = 800, height = 600)
+plot(1:10, (1:10)^2)
+dev.off()
+
+# Multiple formats
+pdf("plot.pdf", width = 8, height = 6)
+plot(1:10, (1:10)^2)
+dev.off()
+
+# SVG (scalable)
+svg("plot.svg", width = 8, height = 6)
+plot(1:10, (1:10)^2)
+dev.off()
+
+# ggplot2 - ggsave (auto-detects format)
+ggsave("myplot.png", plot = p, width = 8, height = 6, dpi = 300)
+ggsave("myplot.pdf", plot = p, width = 8, height = 6)
+```
+
+## Summary
+
+Key takeaways from this chapter:
+
+1. **Base R**: `plot()` is flexible but complex; good for quick exploration
+2. **ggplot2**: Grammar of graphics approach; better for publication-quality plots
+3. **Aesthetics**: Map variables to visual properties (color, size, shape)
+4. **Geoms**: Different plot types (point, line, bar, histogram, etc.)
+5. **Themes**: Control appearance with pre-built or custom themes
+
+## Exercises
+
+::: {.callout-important}
+## Exercise 1
+Create a scatter plot showing the relationship between two variables. Add a trend line, color points by a third variable, and save as a high-resolution PNG.
+:::
+
+::: {.callout-important}
+## Exercise 2
+Create a histogram with a density curve overlaid. Use proper labels and a nice color scheme.
+:::
+
+::: {.callout-important}
+## Exercise 3
+Using ggplot2, create a faceted plot showing data for different groups side by side.
+:::
+
+## Further Reading
+
+- **Original Slides**: `../Advanced_Statistics_R_graphics.pdf`
+- "ggplot2: Elegant Graphics for Data Analysis" by Hadley Wickham
+- R Graphics Cookbook by Winston Chang

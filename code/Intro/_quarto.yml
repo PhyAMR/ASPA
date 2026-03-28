@@ -1,0 +1,28 @@
+project:
+  type: book
+  output-dir: _book
+
+book:
+  title: "Notes of the course Advanced Statistics for Physical Analysis"
+  author: "Your Name"
+  chapters:
+    - index.qmd
+    - part: "Introduction"
+      chapters:
+        - chapters/chapter01_r_intro.qmd
+        - chapters/chapter02_flow_control.qmd
+        - chapters/chapter03_data_types.qmd
+        - chapters/chapter04_lists_dataframes.qmd
+        - chapters/chapter05_data_io_advanced.qmd
+        - chapters/chapter06_graphics.qmd
+    - part: "Probability and Statistics with R"
+      chapters:
+        - chapters/chapter07_continuous_distributions.qmd
+        - chapters/chapter08_discrete_distributions.qmd
+        - chapters/chapter09_parameter_estimation.qmd
+        - chapters/chapter10_model_comparison.qmd
+
+format:
+  html:
+    theme: cosmo
+    toc: true

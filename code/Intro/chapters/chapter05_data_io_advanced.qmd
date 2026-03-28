@@ -1,0 +1,397 @@
+---
+title: "Chapter 5 - Data Import/Output and Advanced R"
+subtitle: "Working with External Data and Advanced R Features"
+number-sections: true
+---
+
+## Learning Objectives
+
+After completing this chapter, you should be able to:
+
+- Import data from various file formats
+- Read data from web sources and databases
+- Export data in different formats
+- Use advanced data structures
+- Work with dates and times in R
+
+## Overview
+
+::: {.callout-note}
+This chapter covers material from the lecture slides: `Advanced_Statistics_R_4.pdf`
+:::
+
+## Reading Data with read.table()
+
+The `read.table()` family of functions provides flexible data import:
+
+```{r, eval=FALSE}
+# Basic usage
+data <- read.table("filename.txt")
+
+# Common options
+data <- read.table("filename.txt",
+  header = FALSE,          # First line is NOT column names
+  sep = "",                # Whitespace delimiter (default)
+  dec = ".",               # Decimal point character
+  quote = '""',             # Quoting character
+  na.strings = "NA",       # String(s) to interpret as NA
+  colClasses = NA,         # Column classes (auto-detect)
+  nrows = -1,              # Number of rows to read (-1 = all)
+  skip = 0,                # Skip first n lines
+  check.names = TRUE,      # Make column names valid R names
+  fill = FALSE,            # Fill missing values in short rows
+  comment.char = "#"       # Character for comments
+)
+```
+
+### Specialized Functions
+
+```{r, eval=FALSE}
+# CSV (comma-separated values)
+read.csv("file.csv")
+read.csv2("file.csv")  # European format (semicolon, comma as decimal)
+
+# Delimited files
+read.delim("file.txt")     # Tab-delimited
+read.delim2("file.txt")    # Tab-delimited with European decimals
+
+# Fixed width format
+read.fwf("file.txt", widths = c(5, 10, 8))
+```
+
+## Importing Data from Various Sources
+
+### From the Web
+
+```{r, eval=FALSE}
+# Read data from URL
+url <- "https://raw.githubusercontent.com/.../data.csv"
+web_data <- read.csv(url)
+
+# Using httr package for more control
+library(httr)
+response <- GET("https://api.example.com/data")
+content <- content(response, "text")
+data <- read.csv(text = content)
+```
+
+### From Databases
+
+```{r, eval=FALSE}
+# Using RSQLite as example
+library(DBI)
+library(RSQLite)
+
+# Connect to database
+con <- dbConnect(RSQLite::SQLite(), "mydb.sqlite")
+
+# List tables
+dbListTables(con)
+
+# Read a table
+data <- dbReadTable(con, "mytable")
+
+# Execute SQL query
+result <- dbGetQuery(con, "SELECT * FROM mytable WHERE age > 25")
+
+# Close connection
+dbDisconnect(con)
+```
+
+### Binary Data Formats
+
+```{r, eval=FALSE}
+# HDF5 format (large multidimensional arrays)
+library(rhdf5)
+h5file <- H5Fopen("data.h5")
+data <- h5read(h5file, "dataset_name")
+H5Fclose(h5file)
+
+# NetCDF format (climate/weather data)
+library(ncdf4)
+nc <- nc_open("data.nc")
+data <- ncvar_get(nc, "variable_name")
+nc_close(nc)
+```
+
+### Images
+
+```{r, eval=FALSE}
+# Using magick package
+library(magick)
+img <- image_read("path/to/image.png")
+print(img)
+
+# For image analysis (pixel values)
+library(png)
+img_data <- readPNG("image.png")  # Returns numeric array
+```
+
+## Exporting Data
+
+### Writing to Files
+
+```{r, eval=FALSE}
+# Write CSV
+write.csv(data, "output.csv", row.names = FALSE)
+write.csv(data, "output.csv", na = "", quote = FALSE)
+
+# Write table (more control)
+write.table(data, "output.txt",
+  sep = "\t",              # Tab-delimited
+  quote = FALSE,           # No quotes
+  row.names = FALSE,       # No row names
+  col.names = TRUE,        # Include column names
+  na = "NA"                # NA representation
+)
+```
+
+### Saving R Objects
+
+```{r, eval=FALSE}
+# RDS format (single object)
+saveRDS(data, "data.rds")
+data <- readRDS("data.rds")
+
+# RData format (multiple objects)
+save(data1, data2, list_obj, file = "workspace.RData")
+load("workspace.RData")  # Loads objects into environment
+
+# Save entire workspace
+save.image("my_workspace.RData")
+```
+
+## Working with Dates and Times
+
+### Date Objects
+
+```{r}
+# Create dates
+d1 <- as.Date("2024-03-15")
+d2 <- as.Date("15/03/2024", format = "%d/%m/%Y")
+
+# Current date
+today <- Sys.Date()
+
+# Date arithmetic
+d1 + 7           # Add 7 days
+d2 - d1          # Difference in days
+difftime(d2, d1, units = "weeks")
+
+# Sequence of dates
+seq(from = as.Date("2024-01-01"), to = as.Date("2024-12-31"), by = "month")
+```
+
+### POSIXct (Calendar Time)
+
+```{r}
+# Create datetime
+t1 <- as.POSIXct("2024-03-15 14:30:00")
+t2 <- as.POSIXct("2024-03-15 14:30:00", tz = "UTC")
+
+# Current time
+now <- Sys.time()
+
+# Formatting
+format(now, "%Y-%m-%d %H:%M:%S")
+format(now, "%A, %B %d, %Y")
+
+# Extract components
+as.numeric(format(now, "%Y"))   # Year
+as.numeric(format(now, "%m"))   # Month
+as.numeric(format(now, "%d"))   # Day
+```
+
+### POSIXlt (Local Time)
+
+```{r}
+# POSIXlt stores components as a list
+t_lt <- as.POSIXlt(Sys.time())
+t_lt$hour      # Hour
+ t_lt$min       # Minute
+t_lt$sec       # Second
+t_lt$wday      # Day of week (0-6, Sunday=0)
+t_lt$yday      # Day of year (0-365)
+```
+
+### Time Durations
+
+```{r}
+# Create time difference
+one_week <- as.difftime(1, units = "weeks")
+two_days <- as.difftime(2, units = "days")
+
+# Add to datetime
+future <- Sys.time() + one_week
+
+# lubridate package (tidyverse)
+library(lubridate)
+now() + days(7) + hours(3)
+interval(ymd("2024-01-01"), ymd("2024-12-31")) / days(1)
+```
+
+## Set Operations
+
+```{r}
+setA <- c("a", "b", "c", "d", "e")
+setB <- c("d", "e", "f", "g")
+
+# Union
+union(setA, setB)           # All unique elements
+
+# Intersection
+intersect(setA, setB)       # Common elements
+
+# Set difference (order matters)
+setdiff(setA, setB)         # Elements in A but not in B
+setdiff(setB, setA)         # Elements in B but not in A
+
+# Set equality
+setequal(setA, setB)        # FALSE
+
+# Membership
+setA %in% setB              # Which elements of A are in B
+"c" %in% setA               # TRUE
+```
+
+## Vector Inspection Functions
+
+```{r}
+names <- c("John", "John", "Jim", "Anna", "Beatrix", "Anna")
+
+# Count occurrences
+table(names)
+
+# Get unique values
+unique(names)
+
+# Find duplicates
+duplicated(names)           # TRUE if already appeared
+
+# Remove duplicates
+unique(names)
+```
+
+## The Tidyverse Ecosystem
+
+### Core Packages
+
+| Package | Purpose |
+|---------|---------|
+| `ggplot2` | Data visualization |
+| `dplyr` | Data manipulation |
+| `tidyr` | Data tidying |
+| `readr` | Data import |
+| `purrr` | Functional programming |
+| `tibble` | Modern data frames |
+| `stringr` | String manipulation |
+| `forcats` | Factor handling |
+
+```{r, eval=FALSE}
+# Install tidyverse
+install.packages("tidyverse")
+
+# Load core packages
+library(tidyverse)
+```
+
+### dplyr Basics
+
+```{r, eval=FALSE}
+library(dplyr)
+
+# Pipe operator (%>% or |>)
+df %>%
+  filter(age > 25) %>%
+  select(name, score) %>%
+  arrange(desc(score)) %>%
+  mutate(grade = case_when(
+    score >= 90 ~ "A",
+    score >= 80 ~ "B",
+    TRUE ~ "C"
+  ))
+
+# Core verbs
+# filter() - select rows
+# select() - select columns
+# mutate() - create/modify columns
+# arrange() - sort rows
+# summarise() - aggregate
+# group_by() - group data
+```
+
+## Practical Examples
+
+### Example 1: Complete Data Pipeline
+
+```{r, eval=FALSE}
+# Load and process data
+library(tidyverse)
+
+# Read data
+data <- read_csv("students.csv", na = c("", "NA", "N/A"))
+
+# Clean and transform
+clean_data <- data %>%
+  filter(!is.na(age)) %>%
+  mutate(
+    age_group = cut(age, breaks = c(0, 20, 25, 30, Inf),
+                   labels = c("<20", "20-25", "25-30", "30+")),
+    gpa_numeric = as.numeric(gsub("[^0-9.]", "", gpa)),
+    enrollment_date = as.Date(enrollment_date, format = "%m/%d/%Y")
+  ) %>%
+  select(-raw_score)  # Remove unnecessary column
+
+# Save cleaned data
+write_csv(clean_data, "students_clean.csv")
+```
+
+### Example 2: Working with Multiple Files
+
+```{r, eval=FALSE}
+# Read and combine multiple CSV files
+library(tidyverse)
+
+# Get list of files
+files <- list.files("data/", pattern = "\\.csv$", full.names = TRUE)
+
+# Read and combine all files
+combined_data <- files %>%
+  map_dfr(read_csv, .id = "file_id")
+
+# Alternative using base R
+combined <- do.call(rbind, lapply(files, read.csv))
+```
+
+## Summary
+
+Key takeaways from this chapter:
+
+1. **Data Import**: `read.table()` family handles most text formats; specialized packages for binary formats
+2. **Web Data**: Can read directly from URLs; use httr for API access
+3. **Databases**: DBI package provides unified interface to SQL databases
+4. **Dates/Times**: Use `as.Date()` for dates, `POSIXct` for timestamps, `lubridate` for easier handling
+5. **Tidyverse**: Opinionated collection of packages for modern data science
+
+## Exercises
+
+::: {.callout-important}
+## Exercise 1
+Write code to read a CSV file from a URL, convert date columns to proper Date format, and save the cleaned data as an RDS file.
+:::
+
+::: {.callout-important}
+## Exercise 2
+Create a function that takes two data frames and returns information about which rows are common, which are only in the first, and which are only in the second.
+:::
+
+::: {.callout-important}
+## Exercise 3
+Working with dates: Calculate the number of weekdays between two dates (excluding weekends).
+:::
+
+## Further Reading
+
+- **Original Slides**: `../Advanced_Statistics_R_4.pdf`
+- R Documentation: `?read.table`, `?POSIXct`, `?Date`
+- "R for Data Science" by Hadley Wickham

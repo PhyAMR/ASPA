@@ -1,0 +1,372 @@
+---
+title: "Chapter 8 - Discrete Probability Distributions"
+subtitle: "Binomial, Poisson, Geometric, and Other Discrete Distributions"
+number-sections: true
+---
+
+## Learning Objectives
+
+After completing this chapter, you should be able to:
+
+- Understand fundamental discrete probability distributions
+- Calculate probabilities for common discrete scenarios
+- Model count data and waiting times
+- Use R functions for discrete distributions
+- Solve problems involving combinations and permutations
+
+## Overview
+
+::: {.callout-note}
+This chapter covers material from the lecture slides: `Advanced_Statistics_Discrete_Prob.pdf`
+:::
+
+## Combinatorics: Permutations and Combinations
+
+### Permutations
+
+Number of ways to arrange $r$ objects from $n$ distinct objects where order matters:
+
+$$P(n, r) = \frac{n!}{(n-r)!}$$
+
+### Combinations
+
+Number of ways to choose $r$ objects from $n$ distinct objects where order doesnt matter:
+
+$$\binom{n}{r} = \frac{n!}{r!(n-r)!}$$
+
+### In R
+
+```{r}
+# Factorial
+factorial(5)   # 5! = 120
+
+# Combinations
+choose(10, 3)  # C(10,3) = 120
+
+# Permutations
+perm <- function(n, r) factorial(n) / factorial(n - r)
+perm(10, 3)    # P(10,3) = 720
+
+# Practical example: How many ways to choose 3 people from 10?
+choose(10, 3)  # 120
+```
+
+## Bernoulli Distribution
+
+The simplest discrete distribution - a single trial with two outcomes.
+
+### Definition
+
+$$X \sim \text{Bernoulli}(p)$$
+
+$$P(X = k) = \begin{cases} p & \text{if } k = 1 \text{ (success)} \\ 1-p & \text{if } k = 0 \text{ (failure)} \end{cases}$$
+
+### Properties
+
+$$\mathbb{E}[X] = p, \quad \text{Var}(X) = p(1-p)$$
+
+## Binomial Distribution
+
+Models the number of successes in $n$ independent Bernoulli trials.
+
+### Definition
+
+$$X \sim \text{Binomial}(n, p)$$
+
+$$P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n$$
+
+### Properties
+
+$$\mathbb{E}[X] = np, \quad \text{Var}(X) = np(1-p)$$
+
+### In R
+
+```{r}
+# Probability mass function: P(X = k)
+dbinom(3, size = 10, prob = 0.4)  # P(X=3) with n=10, p=0.4
+
+# Cumulative distribution: P(X <= k)
+pbinom(3, size = 10, prob = 0.4)  # P(X <= 3)
+pbinom(3, size = 10, prob = 0.4, lower.tail = FALSE)  # P(X > 3)
+
+# Quantile function
+qbinom(0.95, size = 10, prob = 0.4)  # 95th percentile
+
+# Random generation
+rbinom(100, size = 10, prob = 0.4)
+
+# Visualization
+x <- 0:10
+y <- dbinom(x, size = 10, prob = 0.4)
+barplot(y, names.arg = x, xlab = "k", ylab = "P(X=k)",
+        main = "Binomial(10, 0.4)", col = "steelblue")
+```
+
+### Example: Restaurant Problem
+
+```{r}
+# In a restaurant, 8 entrees are fish, 12 are beef, 10 are poultry (total 30)
+# What is the probability that 2 of the next 4 customers order fish?
+
+# X ~ Binomial(n=4, p=8/30)
+n <- 4
+p <- 8/30
+prob <- dbinom(2, size = n, prob = p)
+cat("P(X = 2) =", prob, "\n")
+
+# Exact calculation
+dbinom(2, size = 4, prob = 8/30)
+```
+
+## Multinomial Distribution
+
+Generalization of binomial to $k$ possible outcomes.
+
+### Definition
+
+$$P(X_1 = x_1, \ldots, X_k = x_k) = \frac{n!}{x_1! \cdots x_k!} p_1^{x_1} \cdots p_k^{x_k}$$
+
+where $\sum_{i=1}^k x_i = n$ and $\sum_{i=1}^k p_i = 1$.
+
+### In R
+
+```{r}
+# Generate multinomial samples
+rmultinom(n = 1, size = 20, prob = c(0.2, 0.5, 0.3))
+
+# Example: 20 trials, 3 categories with probabilities 0.2, 0.5, 0.3
+set.seed(123)
+rmultinom(n = 5, size = 20, prob = c(0.2, 0.5, 0.3))
+```
+
+## Geometric Distribution
+
+Models the number of trials until the first success.
+
+### Definition
+
+$$P(N = n) = (1-p)^{n-1}p, \quad n = 1, 2, \ldots$$
+
+### Properties
+
+$$\mathbb{E}[N] = \frac{1}{p}, \quad \text{Var}(N) = \frac{1-p}{p^2}$$
+
+**Memoryless Property**: $P(N > n + m | N > n) = P(N > m)$
+
+### In R
+
+```{r}
+# Note: R uses number of failures BEFORE first success!
+# So P(N_fail = k) = (1-p)^k * p
+
+# P(first success at trial 5)
+dgeom(4, prob = 0.3)  # 4 failures before 1st success
+
+# Alternative: P(N = 5) directly
+p_geom <- function(n, p) (1-p)^(n-1) * p
+p_geom(5, 0.3)
+
+# Mean and variance
+mean_geom <- function(p) 1/p
+var_geom <- function(p) (1-p)/p^2
+cat("Geometric(p=0.3): Mean =", mean_geom(0.3), "Variance =", var_geom(0.3), "\n")
+
+# Sampling waiting times
+rgeom(1000, prob = 0.3)  # Number of failures before success
+hist(rgeom(10000, prob = 0.3), breaks = 30,
+     main = "Geometric Distribution (failures before success)",
+     xlab = "Number of Failures")
+```
+
+## Negative Binomial Distribution
+
+Models the number of failures before the $r$-th success.
+
+### Definition
+
+$$P(X = k) = \binom{k+r-1}{k} (1-p)^k p^r, \quad k = 0, 1, 2, \ldots$$
+
+### Properties
+
+$$\mathbb{E}[X] = \frac{r(1-p)}{p}, \quad \text{Var}(X) = \frac{r(1-p)}{p^2}$$
+
+Special case: $r = 1$ gives the geometric distribution.
+
+### In R
+
+```{r}
+# Plot negative binomial distributions
+x <- 0:30
+y1 <- dnbinom(x, size = 1, prob = 0.3)  # Geometric
+y2 <- dnbinom(x, size = 5, prob = 0.3)
+
+plot(x, y1, type = "h", ylim = c(0, max(y1, y2)),
+     xlab = "k", ylab = "P(X=k)", main = "Negative Binomial")
+lines(x + 0.15, y2, type = "h", col = "red")
+legend("topright", legend = c("r=1 (Geometric)", "r=5"),
+       col = c("black", "red"), lty = 1)
+
+# Example: Expected number of failures before 3rd success with p=0.3
+r <- 3
+p <- 0.3
+mean_nb <- r*(1-p)/p
+cat("Mean failures before", r, "th success:", mean_nb, "\n")
+```
+
+## Hypergeometric Distribution
+
+Models sampling **without replacement** from a finite population.
+
+### Definition
+
+Draw $n$ items from a population of size $N$ containing $K$ "success" items.
+
+$$P(X = k) = \frac{\binom{K}{k} \binom{N-K}{n-k}}{\binom{N}{n}}$$
+
+### Properties
+
+$$\mathbb{E}[X] = n\frac{K}{N}, \quad \text{Var}(X) = n\frac{K}{N}\left(1-\frac{K}{N}\right)\frac{N-n}{N-1}$$
+
+The factor $\frac{N-n}{N-1}$ is the finite population correction.
+
+### In R
+
+```{r}
+# Example: Urn with 40 white and 60 black balls (100 total)
+# Draw 20 balls. Probability that at least 50 black balls remain?
+# (i.e., at most 10 black balls drawn)
+
+N <- 100    # Total balls
+K <- 60     # Black balls (successes)
+n <- 20     # Draws
+
+# P(X <= 10) where X ~ Hypergeometric(N=100, K=60, n=20)
+prob <- phyper(10, m = K, n = N - K, k = n)
+cat("P(at most 10 black balls drawn) =", prob, "\n")
+
+# Compare to binomial approximation
+pbinom(10, size = 20, prob = 0.6)  # Approximation
+```
+
+## Poisson Distribution
+
+Models the number of rare, independent events in a fixed interval.
+
+### Definition
+
+$$X \sim \text{Poisson}(\lambda)$$
+
+$$P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots$$
+
+### Properties
+
+$$\mathbb{E}[X] = \text{Var}(X) = \lambda$$
+
+### In R
+
+```{r}
+# Probability mass function
+dpois(3, lambda = 2)  # P(X=3) with λ=2
+
+# Cumulative distribution
+ppois(3, lambda = 2)  # P(X <= 3)
+
+# Quantile
+qpois(0.95, lambda = 2)  # 95th percentile
+
+# Random generation
+rpois(100, lambda = 2)
+
+# Visualization
+x <- 0:15
+y1 <- dpois(x, lambda = 2)
+y2 <- dpois(x, lambda = 5)
+y3 <- dpois(x, lambda = 10)
+
+plot(x, y1, type = "h", ylim = c(0, 0.35),
+     xlab = "k", ylab = "P(X=k)", main = "Poisson Distributions")
+lines(x + 0.15, y2, type = "h", col = "blue")
+lines(x + 0.3, y3, type = "h", col = "red")
+legend("topright", legend = c("λ=2", "λ=5", "λ=10"),
+       col = c("black", "blue", "red"), lty = 1)
+```
+
+### Poisson as Limit of Binomial
+
+The Poisson distribution is the limit of Binomial$(n, p)$ as $n \to \infty$ and $p \to 0$ with $np \to \lambda$.
+
+```{r}
+# Demonstration: Binomial approaches Poisson
+n <- 100
+p <- 0.05
+lambda <- n * p
+
+x <- 0:20
+binom_probs <- dbinom(x, size = n, prob = p)
+pois_probs <- dpois(x, lambda = lambda)
+
+plot(x, binom_probs, type = "h", col = "blue", lwd = 2,
+     xlab = "k", ylab = "Probability",
+     main = paste("Binomial(n=", n, ", p=", p,") vs Poisson(λ=", lambda, ")"))
+lines(x + 0.15, pois_probs, type = "h", col = "red", lwd = 2)
+legend("topright", legend = c("Binomial", "Poisson"),
+       col = c("blue", "red"), lty = 1)
+```
+
+## Relationships Between Discrete Distributions
+
+The discrete distributions form a hierarchy:
+
+| Distribution | Scenario |
+|--------------|----------|
+| **Bernoulli** | Single trial |
+| **Binomial** | Count of successes in $n$ trials |
+| **Multinomial** | Multiple outcome categories |
+| **Geometric** | Waiting time for 1st success |
+| **Negative Binomial** | Waiting time for $r$-th success |
+| **Hypergeometric** | Sampling without replacement |
+| **Poisson** | Rare events in continuous time/space |
+
+## Summary Table
+
+| Distribution | Mean | Variance |
+|------------|------|----------|
+| Bernoulli($p$) | $p$ | $p(1-p)$ |
+| Binomial($n, p$) | $np$ | $np(1-p)$ |
+| Geometric($p$) | $1/p$ | $(1-p)/p^2$ |
+| Neg. Binomial($r, p$) | $r(1-p)/p$ | $r(1-p)/p^2$ |
+| Hypergeometric($N, K, n$) | $nK/N$ | $nK/N(1-K/N)(N-n)/(N-1)$ |
+| Poisson($\lambda$) | $\lambda$ | $\lambda$ |
+
+## Summary
+
+Key takeaways from this chapter:
+
+1. **Combinatorics**: $\binom{n}{r}$ counts ways to choose; $\frac{n!}{(n-r)!}$ counts arrangements
+2. **Binomial**: Count of successes in $n$ independent trials
+3. **Poisson**: Rare events; single parameter $\lambda$ equals mean and variance
+4. **Geometric**: Memoryless waiting time for first success
+5. **Hypergeometric**: Sampling without replacement (finite population correction)
+
+## Exercises
+
+::: {.callout-important}
+## Exercise 1
+A fair die is rolled 10 times. What is the probability of getting exactly two 6s? At least one 6?
+:::
+
+::: {.callout-important}
+## Exercise 2
+If phone calls arrive at a call center according to a Poisson process with rate 2 per minute, what is the probability of receiving exactly 5 calls in 2 minutes? What is the expected number of calls?
+:::
+
+::: {.callout-important}
+## Exercise 3
+A deck of 52 cards contains 13 hearts. If you draw 5 cards without replacement, what is the probability of getting exactly 2 hearts? Compare to the binomial approximation (with replacement).
+:::
+
+## Further Reading
+
+- **Original Slides**: `../Advanced_Statistics_Discrete_Prob.pdf`
+- "Introduction to Probability" by Blitzstein and Hwang
+- "Probability: Theory and Examples" by Durrett

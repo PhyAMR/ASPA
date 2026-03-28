@@ -1,0 +1,387 @@
+---
+title: "Chapter 7 - Continuous Probability Distributions"
+subtitle: "Uniform, Normal, Exponential, and Related Distributions"
+number-sections: true
+---
+
+## Learning Objectives
+
+After completing this chapter, you should be able to:
+
+- Understand and work with continuous probability distributions
+- Calculate probabilities and quantiles for common distributions
+- Generate random samples from distributions
+- Understand the relationships between distributions
+- Apply limit theorems (LLN, CLT, LDP)
+
+## Overview
+
+::: {.callout-note}
+This chapter covers material from the lecture slides: `Advanced_Statistics_Prob2.pdf`
+:::
+
+## Uniform Distribution
+
+The simplest continuous distribution - all intervals of the same length are equally probable.
+
+### Definition
+
+$$X \sim \text{Uniform}(a, b)$$
+
+$$f(x) = \begin{cases} \frac{1}{b-a} & \text{if } a \leq x \leq b \\ 0 & \text{otherwise} \end{cases}$$
+
+### Properties
+
+$$\mathbb{E}[X] = \frac{a+b}{2}, \quad \text{Var}(X) = \frac{(b-a)^2}{12}$$
+
+### In R
+
+```{r}
+# Density
+x <- seq(0, 1, length.out = 100)
+y <- dunif(x, min = 0, max = 1)
+plot(x, y, type = "l", main = "Uniform(0,1) PDF")
+
+# Cumulative distribution
+punif(0.5, min = 0, max = 1)  # P(X <= 0.5) = 0.5
+
+# Quantile function
+qunif(0.95, min = 0, max = 1)  # 0.95 quantile
+
+# Random generation
+samples <- runif(1000, min = -1, max = 1)
+hist(samples, breaks = 30, probability = TRUE,
+     main = "Histogram of Uniform(-1,1) samples")
+lines(density(samples), col = "red")
+```
+
+## Normal (Gaussian) Distribution
+
+The most important distribution in statistics - arises from the Central Limit Theorem.
+
+### Definition
+
+$$X \sim \mathcal{N}(\mu, \sigma^2)$$
+
+$$f(x) = \frac{1}{\sigma\sqrt{2\pi}} \exp\left(-\frac{(x-\mu)^2}{2\sigma^2}\right)$$
+
+### Properties
+
+$$\mathbb{E}[X] = \mu, \quad \text{Var}(X) = \sigma^2$$
+
+Skewness = 0, Kurtosis = 3 (excess kurtosis = 0)
+
+### In R
+
+```{r}
+# Standard normal
+x <- seq(-4, 4, length.out = 200)
+y <- dnorm(x, mean = 0, sd = 1)
+plot(x, y, type = "l", main = "Standard Normal PDF",
+     xlab = "x", ylab = "Density")
+
+# Different parameters
+y2 <- dnorm(x, mean = 1, sd = 2)
+lines(x, y2, col = "red", lty = 2)
+legend("topright", legend = c("N(0,1)", "N(1,4)"),
+       col = c("black", "red"), lty = c(1, 2))
+
+# Cumulative distribution
+pnorm(0)              # P(Z <= 0) = 0.5
+pnorm(1.96)           # ~0.975 (95th percentile)
+1 - pnorm(1.96)       # Right tail probability
+
+# Quantile function (critical values)
+qnorm(0.025)          # -1.96 (lower 2.5%)
+qnorm(0.975)          # 1.96 (upper 2.5%)
+qnorm(0.95)           # 1.645 (one-sided 95%)
+
+# Random samples
+samples <- rnorm(1000, mean = 100, sd = 15)
+hist(samples, breaks = 30, probability = TRUE)
+curve(dnorm(x, mean = 100, sd = 15), add = TRUE, col = "red")
+```
+
+### Standardization
+
+Any normal can be standardized:
+
+$$Z = \frac{X - \mu}{\sigma} \sim \mathcal{N}(0, 1)$$
+
+```{r}
+x <- rnorm(100, mean = 50, sd = 10)
+z <- (x - mean(x)) / sd(x)  # Standardize
+hist(z, probability = TRUE)
+curve(dnorm(x), add = TRUE, col = "red")
+```
+
+## Exponential Distribution
+
+Models the time between events in a Poisson process.
+
+### Definition
+
+$$X \sim \text{Exp}(\lambda)$$
+
+$$f(x) = \lambda e^{-\lambda x}, \quad x \geq 0$$
+
+### Properties
+
+$$\mathbb{E}[X] = \frac{1}{\lambda}, \quad \text{Var}(X) = \frac{1}{\lambda^2}$$
+
+Memoryless property: $P(X > s + t | X > s) = P(X > t)$
+
+### In R
+
+```{r}
+# Density
+x <- seq(0, 5, length.out = 100)
+y1 <- dexp(x, rate = 1)
+y2 <- dexp(x, rate = 0.5)
+y3 <- dexp(x, rate = 2)
+
+plot(x, y1, type = "l", ylab = "Density",
+     main = "Exponential Distributions")
+lines(x, y2, col = "red", lty = 2)
+lines(x, y3, col = "blue", lty = 3)
+legend("topright", legend = c("λ=1", "λ=0.5", "λ=2"),
+       col = c("black", "red", "blue"), lty = 1:3)
+
+# Mean and variance
+lambda <- 2
+mean_exp <- 1/lambda
+var_exp <- 1/lambda^2
+cat("Mean:", mean_exp, "Variance:", var_exp, "\n")
+
+# CDF: P(X <= x)
+pexp(1, rate = 1)     # P(X <= 1) with λ=1
+
+# Quantile
+qexp(0.5, rate = 1)   # Median
+```
+
+## Erlang Distribution
+
+Sum of $n$ independent exponential random variables.
+
+### Definition
+
+$$X \sim \text{Erlang}(n, \lambda)$$
+
+$$f(t) = \frac{\lambda^n t^{n-1}}{(n-1)!} e^{-\lambda t}, \quad t \geq 0$$
+
+### Properties
+
+$$\mathbb{E}[T] = \frac{n}{\lambda}, \quad \text{Var}(T) = \frac{n}{\lambda^2}$$
+
+Special case: $n = 1$ gives the exponential distribution.
+
+### In R
+
+```{r}
+# Erlang is a special case of Gamma with integer shape
+t <- seq(0, 10, length.out = 100)
+plot(t, dgamma(t, shape = 1, rate = 1), type = "l",
+     ylab = "Density", main = "Erlang Distributions")
+lines(t, dgamma(t, shape = 3, rate = 1), col = "blue")
+lines(t, dgamma(t, shape = 5, rate = 1), col = "red")
+legend("topright", legend = c("n=1 (Exp)", "n=3", "n=5"),
+       col = c("black", "blue", "red"), lty = 1)
+
+# Example: Waiting time until 3rd event
+n <- 3
+lambda <- 1
+mean_erlang <- n/lambda
+var_erlang <- n/lambda^2
+cat("Erlang(n=3, λ=1): Mean =", mean_erlang, "Variance =", var_erlang, "\n")
+```
+
+## Gamma Distribution
+
+Generalizes Erlang by allowing non-integer shape parameter.
+
+### Definition
+
+$$X \sim \text{Gamma}(\alpha, \lambda)$$
+
+$$f(x) = \frac{\lambda^\alpha}{\Gamma(\alpha)} x^{\alpha-1} e^{-\lambda x}, \quad x \geq 0$$
+
+where $\Gamma(\alpha) = \int_0^\infty t^{\alpha-1} e^{-t} dt$ is the gamma function.
+
+### Properties
+
+$$\mathbb{E}[X] = \frac{\alpha}{\lambda}, \quad \text{Var}(X) = \frac{\alpha}{\lambda^2}$$
+
+### In R
+
+```{r}
+# Different parameterizations in R:
+# shape = α, rate = λ (or scale = 1/λ)
+
+x <- seq(0, 15, length.out = 200)
+plot(x, dgamma(x, shape = 2, rate = 1), type = "l",
+     ylab = "Density", main = "Gamma Distributions")
+lines(x, dgamma(x, shape = 2, rate = 0.5), col = "red")
+lines(x, dgamma(x, shape = 5, rate = 1), col = "blue")
+legend("topright", legend = c("Γ(2,1)", "Γ(2,0.5)", "Γ(5,1)"),
+       col = c("black", "red", "blue"), lty = 1)
+
+# Conjugate prior: Gamma is conjugate prior for Poisson rate
+```
+
+### Relationships
+
+- $\text{Erlang}(n, \lambda) = \text{Gamma}(n, \lambda)$ when $n$ is integer
+- $\chi^2_k = \text{Gamma}(k/2, 1/2)$ (Chi-squared distribution)
+
+## Beta Distribution
+
+Defined on [0,1], useful as a prior distribution for probabilities.
+
+### Definition
+
+$$X \sim \text{Beta}(\alpha, \beta)$$
+
+$$f(x) = \frac{1}{B(\alpha, \beta)} x^{\alpha-1} (1-x)^{\beta-1}, \quad 0 \leq x \leq 1$$
+
+where $B(\alpha, \beta) = \frac{\Gamma(\alpha)\Gamma(\beta)}{\Gamma(\alpha+\beta)}$ is the beta function.
+
+### Properties
+
+$$\mathbb{E}[X] = \frac{\alpha}{\alpha + \beta}, \quad \text{Var}(X) = \frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}$$
+
+### In R
+
+```{r}
+# Plot different beta distributions
+x <- seq(0, 1, length.out = 200)
+plot(x, dbeta(x, 2, 5), type = "l", ylim = c(0, 3),
+     ylab = "Density", main = "Beta Distributions")
+lines(x, dbeta(x, 5, 2), col = "red")
+lines(x, dbeta(x, 2, 2), col = "blue")
+lines(x, dbeta(x, 0.5, 0.5), col = "green")
+legend("top", legend = c("Beta(2,5)", "Beta(5,2)", "Beta(2,2)", "Beta(0.5,0.5)"),
+       col = c("black", "red", "blue", "green"), lty = 1)
+
+# Conjugate prior: Beta is conjugate prior for Bernoulli/Binomial
+# Posterior: Beta(α + k, β + n - k) after observing k successes in n trials
+```
+
+## Beta Mixtures
+
+Mixing multiple beta distributions creates multimodal distributions.
+
+```{r}
+# Mixture of two betas
+x <- seq(0, 1, length.out = 200)
+mixture <- 0.5 * dbeta(x, 2, 5) + 0.5 * dbeta(x, 5, 2)
+plot(x, mixture, type = "l", ylab = "Density",
+     main = "Beta Mixture: 0.5 Beta(2,5) + 0.5 Beta(5,2)")
+
+# Can model complex beliefs that single beta cannot
+```
+
+## Limit Theorems
+
+### Law of Large Numbers (LLN)
+
+For i.i.d. random variables $X_1, X_2, \ldots$ with mean $\mu$:
+
+$$\bar{X}_n = \frac{1}{n}\sum_{i=1}^n X_i \xrightarrow{n \to \infty} \mu$$
+
+```{r}
+# Demonstration of LLN
+set.seed(123)
+n <- 10000
+x <- runif(n, -1, 1)  # Uniform on [-1,1], true mean = 0
+running_mean <- cumsum(x) / (1:n)
+
+plot(running_mean, type = "l", xlab = "n",
+     ylab = "Sample Mean",
+     main = "Law of Large Numbers")
+abline(h = 0, col = "red", lty = 2)
+legend("topright", legend = "True mean = 0", col = "red", lty = 2)
+```
+
+### Central Limit Theorem (CLT)
+
+For i.i.d. random variables with mean $\mu$ and variance $\sigma^2$:
+
+$$\frac{1}{\sqrt{n}}\sum_{i=1}^n (X_i - \mu) \xrightarrow{d} \mathcal{N}(0, \sigma^2)$$
+
+Equivalently: $\bar{X}_n \approx \mathcal{N}(\mu, \sigma^2/n)$
+
+```{r}
+# Demonstration of CLT with uniform distribution
+set.seed(42)
+n <- 50  # Sample size
+m <- 1000  # Number of samples
+
+# Generate sample means from uniform distribution
+sample_means <- replicate(m, mean(runif(n, -1, 1)))
+
+# Plot
+hist(sample_means, breaks = 30, probability = TRUE,
+     main = paste("CLT: Distribution of Sample Mean\nn =", n),
+     xlab = "Sample Mean")
+
+# Theoretical normal distribution
+theoretical_mean <- 0
+theoretical_sd <- sqrt((1/3)/n)  # Var(Uniform(-1,1)) = 1/3
+curve(dnorm(x, theoretical_mean, theoretical_sd),
+      add = TRUE, col = "red", lwd = 2)
+```
+
+### Large Deviation Principle (LDP)
+
+For rare fluctuations far from the mean:
+
+$$P(\bar{X}_n \approx x) \asymp e^{-n\mathcal{I}(x)}$$
+
+where $\mathcal{I}(x)$ is the rate function.
+
+Key idea: Events far from the mean are exponentially rare.
+
+## Unified Picture of Limit Theorems
+
+| Regime | Scaling | Description |
+|--------|---------|-------------|
+| LLN | $n$ | Deterministic limit |
+| CLT | $\sqrt{n}$ | Gaussian fluctuations |
+| LDP | $e^{-n}$ | Rare event tails |
+
+**Big picture**: Probability concentrates as data grows.
+
+## Summary
+
+Key takeaways from this chapter:
+
+1. **Uniform**: Equal probability over interval; foundation for random number generation
+2. **Normal**: Central to statistics; arises from CLT
+3. **Exponential**: Memoryless waiting times; $\lambda$ is rate parameter
+4. **Gamma/Erlang**: Sum of exponentials; conjugate prior for Poisson
+5. **Beta**: Conjugate prior for Bernoulli/Binomial probabilities
+6. **Limit Theorems**: LLN (convergence to mean), CLT (Gaussian fluctuations), LDP (rare events)
+
+## Exercises
+
+::: {.callout-important}
+## Exercise 1
+Generate 1000 samples from N(100, 225). Calculate the proportion that fall within 1, 2, and 3 standard deviations of the mean. Compare to the empirical rule (68-95-99.7).
+:::
+
+::: {.callout-important}
+## Exercise 2
+If radioactive decay follows an exponential distribution with rate λ = 0.1 per second, what is the probability that a particle decays within the first 5 seconds? What is the expected waiting time?
+:::
+
+::: {.callout-important}
+## Exercise 3
+Verify the CLT with your own simulation using a non-normal distribution (e.g., uniform or exponential).
+:::
+
+## Further Reading
+
+- **Original Slides**: `../Advanced_Statistics_Prob2.pdf`
+- "Probability and Statistics for Engineers" by Walpole et al.
+- "Statistical Inference" by Casella and Berger

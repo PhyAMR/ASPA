@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>8&nbsp; Chapter 8 - Discrete Probability Distributions – Notes of the course Advanced Statistics for Physical Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/chapter09_parameter_estimation.html" rel="next">
+<link href="../chapters/chapter07_continuous_distributions.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f578c9e9380db423bddf2a16dd326e1e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/chapter07_continuous_distributions.html">Probability and Statistics with R</a></li><li class="breadcrumb-item"><a href="../chapters/chapter08_discrete_distributions.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8 - Discrete Probability Distributions</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Notes of the course Advanced Statistics for Physical Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Introduction</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter01_r_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Chapter 1 - Introduction to R for Bayesian Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter02_flow_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2 - Flow Control and Functions in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter03_data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3 - Data Types and Precision in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter04_lists_dataframes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4 - Lists and Data Frames in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter05_data_io_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5 - Data Import/Output and Advanced R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter06_graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6 - Graphics in R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability and Statistics with R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter07_continuous_distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7 - Continuous Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter08_discrete_distributions.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8 - Discrete Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter09_parameter_estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 9 - Bayesian Parameter Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter10_model_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 10 - Bayesian Model Comparison</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link active" data-scroll-target="#learning-objectives"><span class="header-section-number">8.1</span> Learning Objectives</a></li>
+  <li><a href="#overview" id="toc-overview" class="nav-link" data-scroll-target="#overview"><span class="header-section-number">8.2</span> Overview</a></li>
+  <li><a href="#combinatorics-permutations-and-combinations" id="toc-combinatorics-permutations-and-combinations" class="nav-link" data-scroll-target="#combinatorics-permutations-and-combinations"><span class="header-section-number">8.3</span> Combinatorics: Permutations and Combinations</a>
+  <ul class="collapse">
+  <li><a href="#permutations" id="toc-permutations" class="nav-link" data-scroll-target="#permutations"><span class="header-section-number">8.3.1</span> Permutations</a></li>
+  <li><a href="#combinations" id="toc-combinations" class="nav-link" data-scroll-target="#combinations"><span class="header-section-number">8.3.2</span> Combinations</a></li>
+  <li><a href="#in-r" id="toc-in-r" class="nav-link" data-scroll-target="#in-r"><span class="header-section-number">8.3.3</span> In R</a></li>
+  </ul></li>
+  <li><a href="#bernoulli-distribution" id="toc-bernoulli-distribution" class="nav-link" data-scroll-target="#bernoulli-distribution"><span class="header-section-number">8.4</span> Bernoulli Distribution</a>
+  <ul class="collapse">
+  <li><a href="#definition" id="toc-definition" class="nav-link" data-scroll-target="#definition"><span class="header-section-number">8.4.1</span> Definition</a></li>
+  <li><a href="#properties" id="toc-properties" class="nav-link" data-scroll-target="#properties"><span class="header-section-number">8.4.2</span> Properties</a></li>
+  </ul></li>
+  <li><a href="#binomial-distribution" id="toc-binomial-distribution" class="nav-link" data-scroll-target="#binomial-distribution"><span class="header-section-number">8.5</span> Binomial Distribution</a>
+  <ul class="collapse">
+  <li><a href="#definition-1" id="toc-definition-1" class="nav-link" data-scroll-target="#definition-1"><span class="header-section-number">8.5.1</span> Definition</a></li>
+  <li><a href="#properties-1" id="toc-properties-1" class="nav-link" data-scroll-target="#properties-1"><span class="header-section-number">8.5.2</span> Properties</a></li>
+  <li><a href="#in-r-1" id="toc-in-r-1" class="nav-link" data-scroll-target="#in-r-1"><span class="header-section-number">8.5.3</span> In R</a></li>
+  <li><a href="#example-restaurant-problem" id="toc-example-restaurant-problem" class="nav-link" data-scroll-target="#example-restaurant-problem"><span class="header-section-number">8.5.4</span> Example: Restaurant Problem</a></li>
+  </ul></li>
+  <li><a href="#multinomial-distribution" id="toc-multinomial-distribution" class="nav-link" data-scroll-target="#multinomial-distribution"><span class="header-section-number">8.6</span> Multinomial Distribution</a>
+  <ul class="collapse">
+  <li><a href="#definition-2" id="toc-definition-2" class="nav-link" data-scroll-target="#definition-2"><span class="header-section-number">8.6.1</span> Definition</a></li>
+  <li><a href="#in-r-2" id="toc-in-r-2" class="nav-link" data-scroll-target="#in-r-2"><span class="header-section-number">8.6.2</span> In R</a></li>
+  </ul></li>
+  <li><a href="#geometric-distribution" id="toc-geometric-distribution" class="nav-link" data-scroll-target="#geometric-distribution"><span class="header-section-number">8.7</span> Geometric Distribution</a>
+  <ul class="collapse">
+  <li><a href="#definition-3" id="toc-definition-3" class="nav-link" data-scroll-target="#definition-3"><span class="header-section-number">8.7.1</span> Definition</a></li>
+  <li><a href="#properties-2" id="toc-properties-2" class="nav-link" data-scroll-target="#properties-2"><span class="header-section-number">8.7.2</span> Properties</a></li>
+  <li><a href="#in-r-3" id="toc-in-r-3" class="nav-link" data-scroll-target="#in-r-3"><span class="header-section-number">8.7.3</span> In R</a></li>
+  </ul></li>
+  <li><a href="#negative-binomial-distribution" id="toc-negative-binomial-distribution" class="nav-link" data-scroll-target="#negative-binomial-distribution"><span class="header-section-number">8.8</span> Negative Binomial Distribution</a>
+  <ul class="collapse">
+  <li><a href="#definition-4" id="toc-definition-4" class="nav-link" data-scroll-target="#definition-4"><span class="header-section-number">8.8.1</span> Definition</a></li>
+  <li><a href="#properties-3" id="toc-properties-3" class="nav-link" data-scroll-target="#properties-3"><span class="header-section-number">8.8.2</span> Properties</a></li>
+  <li><a href="#in-r-4" id="toc-in-r-4" class="nav-link" data-scroll-target="#in-r-4"><span class="header-section-number">8.8.3</span> In R</a></li>
+  </ul></li>
+  <li><a href="#hypergeometric-distribution" id="toc-hypergeometric-distribution" class="nav-link" data-scroll-target="#hypergeometric-distribution"><span class="header-section-number">8.9</span> Hypergeometric Distribution</a>
+  <ul class="collapse">
+  <li><a href="#definition-5" id="toc-definition-5" class="nav-link" data-scroll-target="#definition-5"><span class="header-section-number">8.9.1</span> Definition</a></li>
+  <li><a href="#properties-4" id="toc-properties-4" class="nav-link" data-scroll-target="#properties-4"><span class="header-section-number">8.9.2</span> Properties</a></li>
+  <li><a href="#in-r-5" id="toc-in-r-5" class="nav-link" data-scroll-target="#in-r-5"><span class="header-section-number">8.9.3</span> In R</a></li>
+  </ul></li>
+  <li><a href="#poisson-distribution" id="toc-poisson-distribution" class="nav-link" data-scroll-target="#poisson-distribution"><span class="header-section-number">8.10</span> Poisson Distribution</a>
+  <ul class="collapse">
+  <li><a href="#definition-6" id="toc-definition-6" class="nav-link" data-scroll-target="#definition-6"><span class="header-section-number">8.10.1</span> Definition</a></li>
+  <li><a href="#properties-5" id="toc-properties-5" class="nav-link" data-scroll-target="#properties-5"><span class="header-section-number">8.10.2</span> Properties</a></li>
+  <li><a href="#in-r-6" id="toc-in-r-6" class="nav-link" data-scroll-target="#in-r-6"><span class="header-section-number">8.10.3</span> In R</a></li>
+  <li><a href="#poisson-as-limit-of-binomial" id="toc-poisson-as-limit-of-binomial" class="nav-link" data-scroll-target="#poisson-as-limit-of-binomial"><span class="header-section-number">8.10.4</span> Poisson as Limit of Binomial</a></li>
+  </ul></li>
+  <li><a href="#relationships-between-discrete-distributions" id="toc-relationships-between-discrete-distributions" class="nav-link" data-scroll-target="#relationships-between-discrete-distributions"><span class="header-section-number">8.11</span> Relationships Between Discrete Distributions</a></li>
+  <li><a href="#summary-table" id="toc-summary-table" class="nav-link" data-scroll-target="#summary-table"><span class="header-section-number">8.12</span> Summary Table</a></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary"><span class="header-section-number">8.13</span> Summary</a></li>
+  <li><a href="#exercises" id="toc-exercises" class="nav-link" data-scroll-target="#exercises"><span class="header-section-number">8.14</span> Exercises</a></li>
+  <li><a href="#further-reading" id="toc-further-reading" class="nav-link" data-scroll-target="#further-reading"><span class="header-section-number">8.15</span> Further Reading</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/chapter07_continuous_distributions.html">Probability and Statistics with R</a></li><li class="breadcrumb-item"><a href="../chapters/chapter08_discrete_distributions.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8 - Discrete Probability Distributions</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8 - Discrete Probability Distributions</span></h1>
+<p class="subtitle lead">Binomial, Poisson, Geometric, and Other Discrete Distributions</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="learning-objectives" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">8.1</span> Learning Objectives</h2>
+<p>After completing this chapter, you should be able to:</p>
+<ul>
+<li>Understand fundamental discrete probability distributions</li>
+<li>Calculate probabilities for common discrete scenarios</li>
+<li>Model count data and waiting times</li>
+<li>Use R functions for discrete distributions</li>
+<li>Solve problems involving combinations and permutations</li>
+</ul>
+</section>
+<section id="overview" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="overview"><span class="header-section-number">8.2</span> Overview</h2>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>This chapter covers material from the lecture slides: <code>Advanced_Statistics_Discrete_Prob.pdf</code></p>
+</div>
+</div>
+</section>
+<section id="combinatorics-permutations-and-combinations" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="combinatorics-permutations-and-combinations"><span class="header-section-number">8.3</span> Combinatorics: Permutations and Combinations</h2>
+<section id="permutations" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="permutations"><span class="header-section-number">8.3.1</span> Permutations</h3>
+<p>Number of ways to arrange <span class="math inline">\(r\)</span> objects from <span class="math inline">\(n\)</span> distinct objects where order matters:</p>
+<p><span class="math display">\[P(n, r) = \frac{n!}{(n-r)!}\]</span></p>
+</section>
+<section id="combinations" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="combinations"><span class="header-section-number">8.3.2</span> Combinations</h3>
+<p>Number of ways to choose <span class="math inline">\(r\)</span> objects from <span class="math inline">\(n\)</span> distinct objects where order doesnt matter:</p>
+<p><span class="math display">\[\binom{n}{r} = \frac{n!}{r!(n-r)!}\]</span></p>
+</section>
+<section id="in-r" class="level3" data-number="8.3.3">
+<h3 data-number="8.3.3" class="anchored" data-anchor-id="in-r"><span class="header-section-number">8.3.3</span> In R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Factorial</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">factorial</span>(<span class="dv">5</span>)   <span class="co"># 5! = 120</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 120</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Combinations</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">10</span>, <span class="dv">3</span>)  <span class="co"># C(10,3) = 120</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 120</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Permutations</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>perm <span class="ot">&lt;-</span> <span class="cf">function</span>(n, r) <span class="fu">factorial</span>(n) <span class="sc">/</span> <span class="fu">factorial</span>(n <span class="sc">-</span> r)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">perm</span>(<span class="dv">10</span>, <span class="dv">3</span>)    <span class="co"># P(10,3) = 720</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 720</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Practical example: How many ways to choose 3 people from 10?</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">choose</span>(<span class="dv">10</span>, <span class="dv">3</span>)  <span class="co"># 120</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 120</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="bernoulli-distribution" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="bernoulli-distribution"><span class="header-section-number">8.4</span> Bernoulli Distribution</h2>
+<p>The simplest discrete distribution - a single trial with two outcomes.</p>
+<section id="definition" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="definition"><span class="header-section-number">8.4.1</span> Definition</h3>
+<p><span class="math display">\[X \sim \text{Bernoulli}(p)\]</span></p>
+<p><span class="math display">\[P(X = k) = \begin{cases} p &amp; \text{if } k = 1 \text{ (success)} \\ 1-p &amp; \text{if } k = 0 \text{ (failure)} \end{cases}\]</span></p>
+</section>
+<section id="properties" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="properties"><span class="header-section-number">8.4.2</span> Properties</h3>
+<p><span class="math display">\[\mathbb{E}[X] = p, \quad \text{Var}(X) = p(1-p)\]</span></p>
+</section>
+</section>
+<section id="binomial-distribution" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="binomial-distribution"><span class="header-section-number">8.5</span> Binomial Distribution</h2>
+<p>Models the number of successes in <span class="math inline">\(n\)</span> independent Bernoulli trials.</p>
+<section id="definition-1" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="definition-1"><span class="header-section-number">8.5.1</span> Definition</h3>
+<p><span class="math display">\[X \sim \text{Binomial}(n, p)\]</span></p>
+<p><span class="math display">\[P(X = k) = \binom{n}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n\]</span></p>
+</section>
+<section id="properties-1" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="properties-1"><span class="header-section-number">8.5.2</span> Properties</h3>
+<p><span class="math display">\[\mathbb{E}[X] = np, \quad \text{Var}(X) = np(1-p)\]</span></p>
+</section>
+<section id="in-r-1" class="level3" data-number="8.5.3">
+<h3 data-number="8.5.3" class="anchored" data-anchor-id="in-r-1"><span class="header-section-number">8.5.3</span> In R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability mass function: P(X = k)</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)  <span class="co"># P(X=3) with n=10, p=0.4</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2149908</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative distribution: P(X &lt;= k)</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)  <span class="co"># P(X &lt;= 3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.3822806</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">3</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.4</span>, <span class="at">lower.tail =</span> <span class="cn">FALSE</span>)  <span class="co"># P(X &gt; 3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.6177194</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantile function</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qbinom</span>(<span class="fl">0.95</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)  <span class="co"># 95th percentile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random generation</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbinom</span>(<span class="dv">100</span>, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 4 2 1 5 6 4 2 4 2 3 6 4 1 4 4 1 3 5 5 5 5 5 2 2 1 1 4 6 2 5 3 4 5 2 5 4 3
+ [38] 4 5 5 4 1 3 3 4 8 6 2 6 6 2 4 3 2 6 2 1 4 3 3 4 5 2 3 4 4 5 3 4 4 7 2 3 8
+ [75] 4 3 5 3 2 6 1 4 6 2 3 3 4 1 2 5 5 6 2 4 5 6 4 5 2 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">10</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>y <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(x, <span class="at">size =</span> <span class="dv">10</span>, <span class="at">prob =</span> <span class="fl">0.4</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(y, <span class="at">names.arg =</span> x, <span class="at">xlab =</span> <span class="st">"k"</span>, <span class="at">ylab =</span> <span class="st">"P(X=k)"</span>,</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">main =</span> <span class="st">"Binomial(10, 0.4)"</span>, <span class="at">col =</span> <span class="st">"steelblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chapter08_discrete_distributions_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="example-restaurant-problem" class="level3" data-number="8.5.4">
+<h3 data-number="8.5.4" class="anchored" data-anchor-id="example-restaurant-problem"><span class="header-section-number">8.5.4</span> Example: Restaurant Problem</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># In a restaurant, 8 entrees are fish, 12 are beef, 10 are poultry (total 30)</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="co"># What is the probability that 2 of the next 4 customers order fish?</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># X ~ Binomial(n=4, p=8/30)</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">4</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="dv">8</span><span class="sc">/</span><span class="dv">30</span></span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(<span class="dv">2</span>, <span class="at">size =</span> n, <span class="at">prob =</span> p)</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(X = 2) ="</span>, prob, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(X = 2) = 0.2294519 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Exact calculation</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dbinom</span>(<span class="dv">2</span>, <span class="at">size =</span> <span class="dv">4</span>, <span class="at">prob =</span> <span class="dv">8</span><span class="sc">/</span><span class="dv">30</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2294519</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="multinomial-distribution" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="multinomial-distribution"><span class="header-section-number">8.6</span> Multinomial Distribution</h2>
+<p>Generalization of binomial to <span class="math inline">\(k\)</span> possible outcomes.</p>
+<section id="definition-2" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="definition-2"><span class="header-section-number">8.6.1</span> Definition</h3>
+<p><span class="math display">\[P(X_1 = x_1, \ldots, X_k = x_k) = \frac{n!}{x_1! \cdots x_k!} p_1^{x_1} \cdots p_k^{x_k}\]</span></p>
+<p>where <span class="math inline">\(\sum_{i=1}^k x_i = n\)</span> and <span class="math inline">\(\sum_{i=1}^k p_i = 1\)</span>.</p>
+</section>
+<section id="in-r-2" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="in-r-2"><span class="header-section-number">8.6.2</span> In R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate multinomial samples</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rmultinom</span>(<span class="at">n =</span> <span class="dv">1</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1]
+[1,]    7
+[2,]   10
+[3,]    3</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: 20 trials, 3 categories with probabilities 0.2, 0.5, 0.3</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">123</span>)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">rmultinom</span>(<span class="at">n =</span> <span class="dv">5</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> <span class="fu">c</span>(<span class="fl">0.2</span>, <span class="fl">0.5</span>, <span class="fl">0.3</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     [,1] [,2] [,3] [,4] [,5]
+[1,]    3    3    7    4    4
+[2,]    9    8   11    8   10
+[3,]    8    9    2    8    6</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="geometric-distribution" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="geometric-distribution"><span class="header-section-number">8.7</span> Geometric Distribution</h2>
+<p>Models the number of trials until the first success.</p>
+<section id="definition-3" class="level3" data-number="8.7.1">
+<h3 data-number="8.7.1" class="anchored" data-anchor-id="definition-3"><span class="header-section-number">8.7.1</span> Definition</h3>
+<p><span class="math display">\[P(N = n) = (1-p)^{n-1}p, \quad n = 1, 2, \ldots\]</span></p>
+</section>
+<section id="properties-2" class="level3" data-number="8.7.2">
+<h3 data-number="8.7.2" class="anchored" data-anchor-id="properties-2"><span class="header-section-number">8.7.2</span> Properties</h3>
+<p><span class="math display">\[\mathbb{E}[N] = \frac{1}{p}, \quad \text{Var}(N) = \frac{1-p}{p^2}\]</span></p>
+<p><strong>Memoryless Property</strong>: <span class="math inline">\(P(N &gt; n + m | N &gt; n) = P(N &gt; m)\)</span></p>
+</section>
+<section id="in-r-3" class="level3" data-number="8.7.3">
+<h3 data-number="8.7.3" class="anchored" data-anchor-id="in-r-3"><span class="header-section-number">8.7.3</span> In R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Note: R uses number of failures BEFORE first success!</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="co"># So P(N_fail = k) = (1-p)^k * p</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="co"># P(first success at trial 5)</span></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">dgeom</span>(<span class="dv">4</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)  <span class="co"># 4 failures before 1st success</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.07203</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Alternative: P(N = 5) directly</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>p_geom <span class="ot">&lt;-</span> <span class="cf">function</span>(n, p) (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">^</span>(n<span class="dv">-1</span>) <span class="sc">*</span> p</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="fu">p_geom</span>(<span class="dv">5</span>, <span class="fl">0.3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.07203</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Mean and variance</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>mean_geom <span class="ot">&lt;-</span> <span class="cf">function</span>(p) <span class="dv">1</span><span class="sc">/</span>p</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>var_geom <span class="ot">&lt;-</span> <span class="cf">function</span>(p) (<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>p<span class="sc">^</span><span class="dv">2</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Geometric(p=0.3): Mean ="</span>, <span class="fu">mean_geom</span>(<span class="fl">0.3</span>), <span class="st">"Variance ="</span>, <span class="fu">var_geom</span>(<span class="fl">0.3</span>), <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Geometric(p=0.3): Mean = 3.333333 Variance = 7.777778 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Sampling waiting times</span></span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rgeom</span>(<span class="dv">1000</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)  <span class="co"># Number of failures before success</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   [1]  1 10  6  1  1  1  2  9  0  1  3  2  2  6  7  0  0  4  0  2  1  2  1  1
+  [25]  0  2  1  2  5  2  0  0  6  6  0  2  2  0  7  0  0  1  1  2  3  1  1  1
+  [49]  4  0  6  2  2  2  3  3  2  0  4  7  1  0  1  1  3  2  4  2  2  1  0  0
+  [73]  0  4  1  0  0  5  1  0  3  0  1  5  0  1  0  0  1  0  0  0  3  5  2  0
+  [97]  2  9  0  2  0  3  1  2  3  4  3  2 12  0  0  2  0  4  1  4  0  2  0  1
+ [121]  6  1  0  1  0  2  0  4  2  1  1  3  2  3  0  5  1  4  1  3  4  0  1  0
+ [145]  3  0  3  4  2  0  0  0  0  6  3  3  4  2  0  0  3  0  6  2  2  0  1  0
+ [169]  0  1  1  1  0  1  2  4  4  5  0  0  2  0  1  0  0  0  3  1  0  0  0  1
+ [193]  9  4  0  0  1  3  8  1  1  1  0  1  0 12  0  1  4  1  1  0  0  0  1  0
+ [217]  1  5  4  5  0  1  0  1  3  2  1  0  0  2  1  1  0  6  3  3  1  1  4  1
+ [241]  1  0  4  0  0  9  4  1  0  1  1  4  4  1  4  0  1  2  0  6  4  0  0  1
+ [265]  3  1  0 12  2  1  0  5  2  3  5  0  0  0  6  0  5  1  0  0  0  3  1  2
+ [289]  2  2  1  3  7  0  1  2  0  5  0  0  0  3  0  2  0  3 13  1  0  0 11  1
+ [313]  8  7  4  1  0  0  1  3  5  0  0  2  0  0  0  5  1  0  0  3  1  0  0  0
+ [337] 11  0  0  4  6  1  0  3  6  2  4  1  0  2  2  0  1  0  3  0  0  0  1  0
+ [361]  1  2  0  3  0  4  4  0  1  0  0  2  6  0  4  2 11  0  3  0  1  0  2  2
+ [385]  0  4  3  0  0  2  0  0  3  0  2  7  0  2  2  0  8  3  4  0 11  3  4  5
+ [409]  0  6  0  2  0  0  1  2  4  3  0  1  0  0  1  2  2  0  1  9  4  1  2  0
+ [433]  7  0  1  0  0  8  3  2  3  7 10  0  4  1  2  7  8  1  0 10  2  8  4  8
+ [457]  2  2  0  1  0  4  3  0  3  2  5  2  0 10  4  4  0  2 11 11  3  1  2  7
+ [481]  1  0  1  2  1  7  2  2  2  9  1  1  3  0  4  1  0  0  0  1  0  1  2  0
+ [505]  5  2  0  2  0  0  8  1  1  4  2  1  3  2  6  9  0  1  6  2  2  1  2  1
+ [529]  0  0  1  3  4  0  0  0  2  2  2  1  4  7  2  4  0  1  0  1  2  0 13  0
+ [553]  0  1  9  3  0  3  0  0 19  3  1  0  0  5  1  3  8  2  0  1  0  7  0  2
+ [577]  0  1  0  2  0  7  2  0  3  1  0  0  7  0  1 11  8  0  2  2  0  4  1  0
+ [601]  0  0  0  3  0  0  0  3  0  0 10  0  1  1  4  0  7  3  5  1  3  2  6  7
+ [625]  5  1  6  2  2  0  0  1  1  1  2  2  7  1  0  3  0  5  5  0  3  0  2  1
+ [649]  1  6  0  0  0 11  3  0  4  0  8  3  6  2  2  0  4  2  2  1  4  2  3  3
+ [673]  1  1  1  5  2  2  0  6  1  1  2  2  2  0  1 10  2  0  7  0  4  2  4  0
+ [697]  3  3  0  0  0  1  1  1  4  3  3  3  2  2  0  0  0  1  1  0  0  1  2  2
+ [721]  5  2  0  1  0  2  5  3  0  9  7  4  1  5  3  4  0  0  2 12  0  1  0  5
+ [745]  6  2  3  2  6  1  0  0  0  0  9  2  3  6  3  0  4  0  0  8  2  0  5  0
+ [769]  8  0  0  1  2  8  0  1  4  6  0  1  0  0  0  6  0  3  2  3  0  0  4  2
+ [793]  0  5  0  0  2  0  0  1  2  1  3  0  0  1  1  1  5  0  2  1  0  0  3  6
+ [817]  0  4  0  3  0  1  5  2  0  5  2  6  0  1  1  0  2  1  1  1 16  6  4  6
+ [841]  0  0  1  1  1  0  0  0  0  7  2  6  0  7  0  4  4  1  4  0  1  5  2  2
+ [865] 10  1  6  1  3  0  2  7  1  0 10  0  0  0  4  3  1  3  0  0  1  1  2  4
+ [889]  1 17  7  4  0  1  8  1  0  0  1  1 14  2  0  1  2  0  7  1 10  6  5  0
+ [913]  3  1  5  0  0  5  0  6  3  3  0  1  2  0  2  0  1  2  0  0  1  1  0  2
+ [937]  1  2  1  0  6  1  1  1  0  0  2  2  6  1  0  2  1  4  4  8  2  2  4  0
+ [961]  0  0  0  0  7  2  6  1  0  1  1  7  4  3  0  3  9  0  3  1  0  8  7  2
+ [985]  7  0  0  0  0  3  3  0  0  0  6  1  7  4  0  0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(<span class="fu">rgeom</span>(<span class="dv">10000</span>, <span class="at">prob =</span> <span class="fl">0.3</span>), <span class="at">breaks =</span> <span class="dv">30</span>,</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="st">"Geometric Distribution (failures before success)"</span>,</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Number of Failures"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chapter08_discrete_distributions_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="negative-binomial-distribution" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="negative-binomial-distribution"><span class="header-section-number">8.8</span> Negative Binomial Distribution</h2>
+<p>Models the number of failures before the <span class="math inline">\(r\)</span>-th success.</p>
+<section id="definition-4" class="level3" data-number="8.8.1">
+<h3 data-number="8.8.1" class="anchored" data-anchor-id="definition-4"><span class="header-section-number">8.8.1</span> Definition</h3>
+<p><span class="math display">\[P(X = k) = \binom{k+r-1}{k} (1-p)^k p^r, \quad k = 0, 1, 2, \ldots\]</span></p>
+</section>
+<section id="properties-3" class="level3" data-number="8.8.2">
+<h3 data-number="8.8.2" class="anchored" data-anchor-id="properties-3"><span class="header-section-number">8.8.2</span> Properties</h3>
+<p><span class="math display">\[\mathbb{E}[X] = \frac{r(1-p)}{p}, \quad \text{Var}(X) = \frac{r(1-p)}{p^2}\]</span></p>
+<p>Special case: <span class="math inline">\(r = 1\)</span> gives the geometric distribution.</p>
+</section>
+<section id="in-r-4" class="level3" data-number="8.8.3">
+<h3 data-number="8.8.3" class="anchored" data-anchor-id="in-r-4"><span class="header-section-number">8.8.3</span> In R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot negative binomial distributions</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">30</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">dnbinom</span>(x, <span class="at">size =</span> <span class="dv">1</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)  <span class="co"># Geometric</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">dnbinom</span>(x, <span class="at">size =</span> <span class="dv">5</span>, <span class="at">prob =</span> <span class="fl">0.3</span>)</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y1, <span class="at">type =</span> <span class="st">"h"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fu">max</span>(y1, y2)),</span>
+<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"k"</span>, <span class="at">ylab =</span> <span class="st">"P(X=k)"</span>, <span class="at">main =</span> <span class="st">"Negative Binomial"</span>)</span>
+<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x <span class="sc">+</span> <span class="fl">0.15</span>, y2, <span class="at">type =</span> <span class="st">"h"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb37-9"><a href="#cb37-9" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"r=1 (Geometric)"</span>, <span class="st">"r=5"</span>),</span>
+<span id="cb37-10"><a href="#cb37-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"red"</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chapter08_discrete_distributions_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Expected number of failures before 3rd success with p=0.3</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="dv">3</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.3</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>mean_nb <span class="ot">&lt;-</span> r<span class="sc">*</span>(<span class="dv">1</span><span class="sc">-</span>p)<span class="sc">/</span>p</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"Mean failures before"</span>, r, <span class="st">"th success:"</span>, mean_nb, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Mean failures before 3 th success: 7 </code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="hypergeometric-distribution" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="hypergeometric-distribution"><span class="header-section-number">8.9</span> Hypergeometric Distribution</h2>
+<p>Models sampling <strong>without replacement</strong> from a finite population.</p>
+<section id="definition-5" class="level3" data-number="8.9.1">
+<h3 data-number="8.9.1" class="anchored" data-anchor-id="definition-5"><span class="header-section-number">8.9.1</span> Definition</h3>
+<p>Draw <span class="math inline">\(n\)</span> items from a population of size <span class="math inline">\(N\)</span> containing <span class="math inline">\(K\)</span> “success” items.</p>
+<p><span class="math display">\[P(X = k) = \frac{\binom{K}{k} \binom{N-K}{n-k}}{\binom{N}{n}}\]</span></p>
+</section>
+<section id="properties-4" class="level3" data-number="8.9.2">
+<h3 data-number="8.9.2" class="anchored" data-anchor-id="properties-4"><span class="header-section-number">8.9.2</span> Properties</h3>
+<p><span class="math display">\[\mathbb{E}[X] = n\frac{K}{N}, \quad \text{Var}(X) = n\frac{K}{N}\left(1-\frac{K}{N}\right)\frac{N-n}{N-1}\]</span></p>
+<p>The factor <span class="math inline">\(\frac{N-n}{N-1}\)</span> is the finite population correction.</p>
+</section>
+<section id="in-r-5" class="level3" data-number="8.9.3">
+<h3 data-number="8.9.3" class="anchored" data-anchor-id="in-r-5"><span class="header-section-number">8.9.3</span> In R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Example: Urn with 40 white and 60 black balls (100 total)</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Draw 20 balls. Probability that at least 50 black balls remain?</span></span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a><span class="co"># (i.e., at most 10 black balls drawn)</span></span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>N <span class="ot">&lt;-</span> <span class="dv">100</span>    <span class="co"># Total balls</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>K <span class="ot">&lt;-</span> <span class="dv">60</span>     <span class="co"># Black balls (successes)</span></span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">20</span>     <span class="co"># Draws</span></span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a><span class="co"># P(X &lt;= 10) where X ~ Hypergeometric(N=100, K=60, n=20)</span></span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>prob <span class="ot">&lt;-</span> <span class="fu">phyper</span>(<span class="dv">10</span>, <span class="at">m =</span> K, <span class="at">n =</span> N <span class="sc">-</span> K, <span class="at">k =</span> n)</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span>(<span class="st">"P(at most 10 black balls drawn) ="</span>, prob, <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>P(at most 10 black balls drawn) = 0.22098 </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compare to binomial approximation</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="fu">pbinom</span>(<span class="dv">10</span>, <span class="at">size =</span> <span class="dv">20</span>, <span class="at">prob =</span> <span class="fl">0.6</span>)  <span class="co"># Approximation</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.2446628</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="poisson-distribution" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="poisson-distribution"><span class="header-section-number">8.10</span> Poisson Distribution</h2>
+<p>Models the number of rare, independent events in a fixed interval.</p>
+<section id="definition-6" class="level3" data-number="8.10.1">
+<h3 data-number="8.10.1" class="anchored" data-anchor-id="definition-6"><span class="header-section-number">8.10.1</span> Definition</h3>
+<p><span class="math display">\[X \sim \text{Poisson}(\lambda)\]</span></p>
+<p><span class="math display">\[P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots\]</span></p>
+</section>
+<section id="properties-5" class="level3" data-number="8.10.2">
+<h3 data-number="8.10.2" class="anchored" data-anchor-id="properties-5"><span class="header-section-number">8.10.2</span> Properties</h3>
+<p><span class="math display">\[\mathbb{E}[X] = \text{Var}(X) = \lambda\]</span></p>
+</section>
+<section id="in-r-6" class="level3" data-number="8.10.3">
+<h3 data-number="8.10.3" class="anchored" data-anchor-id="in-r-6"><span class="header-section-number">8.10.3</span> In R</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Probability mass function</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="fu">dpois</span>(<span class="dv">3</span>, <span class="at">lambda =</span> <span class="dv">2</span>)  <span class="co"># P(X=3) with λ=2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.180447</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Cumulative distribution</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ppois</span>(<span class="dv">3</span>, <span class="at">lambda =</span> <span class="dv">2</span>)  <span class="co"># P(X &lt;= 3)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.8571235</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Quantile</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a><span class="fu">qpois</span>(<span class="fl">0.95</span>, <span class="at">lambda =</span> <span class="dv">2</span>)  <span class="co"># 95th percentile</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 5</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Random generation</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rpois</span>(<span class="dv">100</span>, <span class="at">lambda =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [1] 4 1 6 0 4 1 1 2 2 1 3 3 6 1 0 3 3 4 3 5 4 4 6 5 2 4 1 2 1 1 1 3 0 2 0 4 1
+ [38] 1 1 1 1 2 2 2 0 2 1 4 1 1 5 1 2 1 3 3 1 6 2 2 0 3 5 2 3 2 0 2 4 4 4 3 2 1
+ [75] 0 1 2 1 2 3 5 0 2 3 0 1 2 2 3 2 3 3 4 2 2 2 3 3 3 4</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualization</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">15</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>y1 <span class="ot">&lt;-</span> <span class="fu">dpois</span>(x, <span class="at">lambda =</span> <span class="dv">2</span>)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>y2 <span class="ot">&lt;-</span> <span class="fu">dpois</span>(x, <span class="at">lambda =</span> <span class="dv">5</span>)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>y3 <span class="ot">&lt;-</span> <span class="fu">dpois</span>(x, <span class="at">lambda =</span> <span class="dv">10</span>)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, y1, <span class="at">type =</span> <span class="st">"h"</span>, <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.35</span>),</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"k"</span>, <span class="at">ylab =</span> <span class="st">"P(X=k)"</span>, <span class="at">main =</span> <span class="st">"Poisson Distributions"</span>)</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x <span class="sc">+</span> <span class="fl">0.15</span>, y2, <span class="at">type =</span> <span class="st">"h"</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x <span class="sc">+</span> <span class="fl">0.3</span>, y3, <span class="at">type =</span> <span class="st">"h"</span>, <span class="at">col =</span> <span class="st">"red"</span>)</span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"λ=2"</span>, <span class="st">"λ=5"</span>, <span class="st">"λ=10"</span>),</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"black"</span>, <span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chapter08_discrete_distributions_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="poisson-as-limit-of-binomial" class="level3" data-number="8.10.4">
+<h3 data-number="8.10.4" class="anchored" data-anchor-id="poisson-as-limit-of-binomial"><span class="header-section-number">8.10.4</span> Poisson as Limit of Binomial</h3>
+<p>The Poisson distribution is the limit of Binomial<span class="math inline">\((n, p)\)</span> as <span class="math inline">\(n \to \infty\)</span> and <span class="math inline">\(p \to 0\)</span> with <span class="math inline">\(np \to \lambda\)</span>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Demonstration: Binomial approaches Poisson</span></span>
+<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
+<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a>p <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a>lambda <span class="ot">&lt;-</span> n <span class="sc">*</span> p</span>
+<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="dv">0</span><span class="sc">:</span><span class="dv">20</span></span>
+<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>binom_probs <span class="ot">&lt;-</span> <span class="fu">dbinom</span>(x, <span class="at">size =</span> n, <span class="at">prob =</span> p)</span>
+<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>pois_probs <span class="ot">&lt;-</span> <span class="fu">dpois</span>(x, <span class="at">lambda =</span> lambda)</span>
+<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(x, binom_probs, <span class="at">type =</span> <span class="st">"h"</span>, <span class="at">col =</span> <span class="st">"blue"</span>, <span class="at">lwd =</span> <span class="dv">2</span>,</span>
+<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"k"</span>, <span class="at">ylab =</span> <span class="st">"Probability"</span>,</span>
+<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a>     <span class="at">main =</span> <span class="fu">paste</span>(<span class="st">"Binomial(n="</span>, n, <span class="st">", p="</span>, p,<span class="st">") vs Poisson(λ="</span>, lambda, <span class="st">")"</span>))</span>
+<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(x <span class="sc">+</span> <span class="fl">0.15</span>, pois_probs, <span class="at">type =</span> <span class="st">"h"</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span>
+<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a><span class="fu">legend</span>(<span class="st">"topright"</span>, <span class="at">legend =</span> <span class="fu">c</span>(<span class="st">"Binomial"</span>, <span class="st">"Poisson"</span>),</span>
+<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">col =</span> <span class="fu">c</span>(<span class="st">"blue"</span>, <span class="st">"red"</span>), <span class="at">lty =</span> <span class="dv">1</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="chapter08_discrete_distributions_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="relationships-between-discrete-distributions" class="level2" data-number="8.11">
+<h2 data-number="8.11" class="anchored" data-anchor-id="relationships-between-discrete-distributions"><span class="header-section-number">8.11</span> Relationships Between Discrete Distributions</h2>
+<p>The discrete distributions form a hierarchy:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Distribution</th>
+<th>Scenario</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Bernoulli</strong></td>
+<td>Single trial</td>
+</tr>
+<tr class="even">
+<td><strong>Binomial</strong></td>
+<td>Count of successes in <span class="math inline">\(n\)</span> trials</td>
+</tr>
+<tr class="odd">
+<td><strong>Multinomial</strong></td>
+<td>Multiple outcome categories</td>
+</tr>
+<tr class="even">
+<td><strong>Geometric</strong></td>
+<td>Waiting time for 1st success</td>
+</tr>
+<tr class="odd">
+<td><strong>Negative Binomial</strong></td>
+<td>Waiting time for <span class="math inline">\(r\)</span>-th success</td>
+</tr>
+<tr class="even">
+<td><strong>Hypergeometric</strong></td>
+<td>Sampling without replacement</td>
+</tr>
+<tr class="odd">
+<td><strong>Poisson</strong></td>
+<td>Rare events in continuous time/space</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="summary-table" class="level2" data-number="8.12">
+<h2 data-number="8.12" class="anchored" data-anchor-id="summary-table"><span class="header-section-number">8.12</span> Summary Table</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Distribution</th>
+<th>Mean</th>
+<th>Variance</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Bernoulli(<span class="math inline">\(p\)</span>)</td>
+<td><span class="math inline">\(p\)</span></td>
+<td><span class="math inline">\(p(1-p)\)</span></td>
+</tr>
+<tr class="even">
+<td>Binomial(<span class="math inline">\(n, p\)</span>)</td>
+<td><span class="math inline">\(np\)</span></td>
+<td><span class="math inline">\(np(1-p)\)</span></td>
+</tr>
+<tr class="odd">
+<td>Geometric(<span class="math inline">\(p\)</span>)</td>
+<td><span class="math inline">\(1/p\)</span></td>
+<td><span class="math inline">\((1-p)/p^2\)</span></td>
+</tr>
+<tr class="even">
+<td>Neg. Binomial(<span class="math inline">\(r, p\)</span>)</td>
+<td><span class="math inline">\(r(1-p)/p\)</span></td>
+<td><span class="math inline">\(r(1-p)/p^2\)</span></td>
+</tr>
+<tr class="odd">
+<td>Hypergeometric(<span class="math inline">\(N, K, n\)</span>)</td>
+<td><span class="math inline">\(nK/N\)</span></td>
+<td><span class="math inline">\(nK/N(1-K/N)(N-n)/(N-1)\)</span></td>
+</tr>
+<tr class="even">
+<td>Poisson(<span class="math inline">\(\lambda\)</span>)</td>
+<td><span class="math inline">\(\lambda\)</span></td>
+<td><span class="math inline">\(\lambda\)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="summary" class="level2" data-number="8.13">
+<h2 data-number="8.13" class="anchored" data-anchor-id="summary"><span class="header-section-number">8.13</span> Summary</h2>
+<p>Key takeaways from this chapter:</p>
+<ol type="1">
+<li><strong>Combinatorics</strong>: <span class="math inline">\(\binom{n}{r}\)</span> counts ways to choose; <span class="math inline">\(\frac{n!}{(n-r)!}\)</span> counts arrangements</li>
+<li><strong>Binomial</strong>: Count of successes in <span class="math inline">\(n\)</span> independent trials</li>
+<li><strong>Poisson</strong>: Rare events; single parameter <span class="math inline">\(\lambda\)</span> equals mean and variance</li>
+<li><strong>Geometric</strong>: Memoryless waiting time for first success</li>
+<li><strong>Hypergeometric</strong>: Sampling without replacement (finite population correction)</li>
+</ol>
+</section>
+<section id="exercises" class="level2" data-number="8.14">
+<h2 data-number="8.14" class="anchored" data-anchor-id="exercises"><span class="header-section-number">8.14</span> Exercises</h2>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 1
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A fair die is rolled 10 times. What is the probability of getting exactly two 6s? At least one 6?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 2
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>If phone calls arrive at a call center according to a Poisson process with rate 2 per minute, what is the probability of receiving exactly 5 calls in 2 minutes? What is the expected number of calls?</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Exercise 3
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>A deck of 52 cards contains 13 hearts. If you draw 5 cards without replacement, what is the probability of getting exactly 2 hearts? Compare to the binomial approximation (with replacement).</p>
+</div>
+</div>
+</section>
+<section id="further-reading" class="level2" data-number="8.15">
+<h2 data-number="8.15" class="anchored" data-anchor-id="further-reading"><span class="header-section-number">8.15</span> Further Reading</h2>
+<ul>
+<li><strong>Original Slides</strong>: <code>../Advanced_Statistics_Discrete_Prob.pdf</code></li>
+<li>“Introduction to Probability” by Blitzstein and Hwang</li>
+<li>“Probability: Theory and Examples” by Durrett</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/chapter07_continuous_distributions.html" class="pagination-link" aria-label="Chapter 7 - Continuous Probability Distributions">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7 - Continuous Probability Distributions</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/chapter09_parameter_estimation.html" class="pagination-link" aria-label="Chapter 9 - Bayesian Parameter Estimation">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 9 - Bayesian Parameter Estimation</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
