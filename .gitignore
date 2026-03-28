@@ -13,3 +13,6 @@ professor_notes/
 *.fdb_latexmk
 *.synctex.gz
 images/
+Template/
+_book/*
+!_book/index.html
