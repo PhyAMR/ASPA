@@ -1,2 +1,0 @@
-# Preface {.unnumbered}
-This book contains my notes on R and statistical modeling. It is a work in progress, and I will be adding more content over time. The goal of this book is to provide a comprehensive introduction to R and statistical modeling for beginners. I hope that it will be useful for students, researchers, and anyone interested in learning more about these topics.

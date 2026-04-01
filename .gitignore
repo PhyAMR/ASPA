@@ -14,5 +14,4 @@ professor_notes/
 *.synctex.gz
 images/
 Template/
-_book/*
-!_book/index.html
+Intro/
