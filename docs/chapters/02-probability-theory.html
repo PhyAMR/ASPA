@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; A Short Recap of Probability Theory – Notes of the course Advanced Statistics for Physical Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/03-distributions.html" rel="next">
+<link href="../chapters/01-introduction.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f578c9e9380db423bddf2a16dd326e1e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-introduction.html">Theory of Statistical Inference</a></li><li class="breadcrumb-item"><a href="../chapters/02-probability-theory.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Short Recap of Probability Theory</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Notes of the course Advanced Statistics for Physical Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Basics of R Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter01_r_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Chapter 1 - Introduction to R for Bayesian Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter02_flow_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2 - Flow Control and Functions in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter03_data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3 - Data Types and Precision in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter04_lists_dataframes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4 - Lists and Data Frames in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter05_data_io_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5 - Data Import/Output and Advanced R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter06_graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6 - Graphics in R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability and Statistics with R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter07_continuous_distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7 - Continuous Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter08_discrete_distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8 - Discrete Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter09_parameter_estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 9 - Bayesian Parameter Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter10_model_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 10 - Bayesian Model Comparison</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Theory of Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Statistics for Physics Analysis: Bayesian Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-probability-theory.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Short Recap of Probability Theory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The Typical Animals Encountered in the Statistical Zoo</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-inference-problems.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Inference Problems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-applications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Selected Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-monte-carlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Monte Carlo Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-appendices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Appendices</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#probability-spaces-and-axioms" id="toc-probability-spaces-and-axioms" class="nav-link active" data-scroll-target="#probability-spaces-and-axioms"><span class="header-section-number">12.1</span> Probability Spaces and Axioms</a></li>
+  <li><a href="#events-and-set-operations" id="toc-events-and-set-operations" class="nav-link" data-scroll-target="#events-and-set-operations"><span class="header-section-number">12.2</span> Events and Set Operations</a></li>
+  <li><a href="#random-variables" id="toc-random-variables" class="nav-link" data-scroll-target="#random-variables"><span class="header-section-number">12.3</span> Random Variables</a></li>
+  <li><a href="#probability-mass-and-density-functions" id="toc-probability-mass-and-density-functions" class="nav-link" data-scroll-target="#probability-mass-and-density-functions"><span class="header-section-number">12.4</span> Probability Mass and Density Functions</a></li>
+  <li><a href="#cumulative-distribution-function" id="toc-cumulative-distribution-function" class="nav-link" data-scroll-target="#cumulative-distribution-function"><span class="header-section-number">12.5</span> Cumulative Distribution Function</a></li>
+  <li><a href="#joint-distributions" id="toc-joint-distributions" class="nav-link" data-scroll-target="#joint-distributions"><span class="header-section-number">12.6</span> Joint Distributions</a></li>
+  <li><a href="#conditional-probability-and-conditional-distributions" id="toc-conditional-probability-and-conditional-distributions" class="nav-link" data-scroll-target="#conditional-probability-and-conditional-distributions"><span class="header-section-number">12.7</span> Conditional Probability and Conditional Distributions</a></li>
+  <li><a href="#expectation-and-moments" id="toc-expectation-and-moments" class="nav-link" data-scroll-target="#expectation-and-moments"><span class="header-section-number">12.8</span> Expectation and Moments</a></li>
+  <li><a href="#moment-and-cumulant-generating-functions" id="toc-moment-and-cumulant-generating-functions" class="nav-link" data-scroll-target="#moment-and-cumulant-generating-functions"><span class="header-section-number">12.9</span> Moment and Cumulant Generating Functions</a></li>
+  <li><a href="#an-important-comment" id="toc-an-important-comment" class="nav-link" data-scroll-target="#an-important-comment"><span class="header-section-number">12.10</span> An important comment</a></li>
+  <li><a href="#bayes-formula" id="toc-bayes-formula" class="nav-link" data-scroll-target="#bayes-formula"><span class="header-section-number">12.11</span> Bayes’ formula</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-introduction.html">Theory of Statistical Inference</a></li><li class="breadcrumb-item"><a href="../chapters/02-probability-theory.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Short Recap of Probability Theory</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Short Recap of Probability Theory</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>This section provides a concise review of the basic concepts of probability theory that will be used throughout these lecture notes on Bayesian inference.</p>
+<section id="probability-spaces-and-axioms" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="probability-spaces-and-axioms"><span class="header-section-number">12.1</span> Probability Spaces and Axioms</h2>
+<p>A probability space is a triple <span class="math inline">\((\Omega, \mathcal{F}, \mathbb{P})\)</span>, where:</p>
+<ul>
+<li><span class="math inline">\(\Omega\)</span> is the sample space, i.e.&nbsp;the set of all possible outcomes;</li>
+<li><span class="math inline">\(\mathcal{F}\)</span> is a <span class="math inline">\(\sigma\)</span>-algebra of subsets of <span class="math inline">\(\Omega\)</span>, (the set of all possible outcomes of an experiment) whose elements are called events <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></li>
+<li><span class="math inline">\(\mathbb{P}: \mathcal{F} \rightarrow[0,1]\)</span> is a probability measure.</li>
+</ul>
+<p>The probability measure satisfies the Kolmogorov axioms:</p>
+<ol type="1">
+<li><strong>Non-negativity</strong>: <span class="math inline">\(\mathbb{P}(A) \geq 0\)</span> for all <span class="math inline">\(A \in \mathcal{F}\)</span>;</li>
+<li><strong>Normalization</strong>: <span class="math inline">\(\mathbb{P}(\Omega)=1\)</span>;</li>
+<li><strong>Countable additivity</strong>: for any countable collection of disjoint events <span class="math inline">\(\left\{A_{i}\right\}_{i=1}^{\infty}\)</span>,</li>
+</ol>
+<p><span class="math display">\[
+\mathbb{P}\left(\bigcup_{i=1}^{\infty} A_{i}\right)=\sum_{i=1}^{\infty} \mathbb{P}\left(A_{i}\right)
+\]</span></p>
+</section>
+<section id="events-and-set-operations" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="events-and-set-operations"><span class="header-section-number">12.2</span> Events and Set Operations</h2>
+<p>Events (elements of the <span class="math inline">\(\sigma\)</span>-algebra <span class="math inline">\(\mathcal{F}\)</span>) can be combined using standard set-theoretic operations, which correspond to logical operations. The properties of the associated probabilities follow from the Kolmogorov axioms.</p>
+<p><strong>Union (Logical OR)</strong>. Given two events <span class="math inline">\(A, B\)</span>, the union</p>
+<p><span class="math display">\[
+A \cup B=\{\omega \in \Omega: \omega \in A \text { or } \omega \in B\}
+\]</span></p>
+<p>represents the event that at least one of the events <span class="math inline">\(A\)</span> or <span class="math inline">\(B\)</span> occurs.</p>
+<p>The probability of the union is given by the inclusion-exclusion principle:</p>
+<p><span class="math display">\[
+\mathbb{P}(A \cup B)=\mathbb{P}(A)+\mathbb{P}(B)-\mathbb{P}(A \cap B)
+\]</span></p>
+<p>If <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> are disjoint (mutually exclusive), i.e.&nbsp;<span class="math inline">\(A \cap B=\varnothing\)</span> is the empty set, then</p>
+<p><span class="math display">\[
+\mathbb{P}(A \cup B)=\mathbb{P}(A)+\mathbb{P}(B)
+\]</span></p>
+<p><strong>Intersection (Logical AND)</strong>. The intersection</p>
+<p><span class="math display">\[
+A \cap B=\{\omega \in \Omega: \omega \in A \text { and } \omega \in B\}
+\]</span></p>
+<p>corresponds to the event that both <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span> occur. Its probability is directly related to conditional probability:</p>
+<p><span class="math display">\[
+\mathbb{P}(A \cap B)=\mathbb{P}(A \mid B) \mathbb{P}(B)=\mathbb{P}(B \mid A) \mathbb{P}(A) \tag{6}
+\]</span></p>
+<p>whenever the conditioning probabilities are well-defined. The conditional probability <span class="math inline">\(\mathbb{P}(B \mid A)\)</span> is the probability of event <span class="math inline">\(B\)</span> given that <span class="math inline">\(A\)</span> is taken as true/occurred.</p>
+<p><strong>Complement (Negation)</strong>. The complement (or negation) of an event <span class="math inline">\(A\)</span> is</p>
+<p><span class="math display">\[
+\bar{A}=\Omega \backslash A,
+\]</span></p>
+<p>representing the event that <span class="math inline">\(A\)</span> does not occur. By normalization,</p>
+<p><span class="math display">\[
+\mathbb{P}(\bar{A})=1-\mathbb{P}(A) .
+\]</span></p>
+<p><strong>Set Difference</strong>. The difference between two events is</p>
+<p><span class="math display">\[
+A \backslash B=A \cap \bar{B},
+\]</span></p>
+<p>corresponding to the event that <span class="math inline">\(A\)</span> occurs but <span class="math inline">\(B\)</span> does not. Its probability is</p>
+<p><span class="math display">\[
+\mathbb{P}(A \backslash B)=\mathbb{P}(A)-\mathbb{P}(A \cap B) .
+\]</span></p>
+<p><strong>De Morgan’s Laws</strong>. For any two events <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>,</p>
+<p><span class="math display">\[
+\overline{(A \cup B)}=\bar{A} \cap \bar{B}, \quad \overline{(A \cap B)}=\bar{A} \cup \bar{B} .
+\]</span></p>
+<p>These identities are often useful when computing probabilities involving negations.</p>
+<p><strong>Monotonicity</strong>. If <span class="math inline">\(A \subseteq B\)</span>, then</p>
+<p><span class="math display">\[
+\mathbb{P}(A) \leq \mathbb{P}(B) .
+\]</span></p>
+<p>In particular, probabilities are bounded as</p>
+<p><span class="math display">\[
+0 \leq \mathbb{P}(A) \leq 1 .
+\]</span></p>
+<p><strong>Partition of the Sample Space</strong>. A collection of events <span class="math inline">\(\left\{A_{i}\right\}_{i=1}^{n}\)</span> is called a partition of <span class="math inline">\(\Omega\)</span> if:</p>
+<ol type="1">
+<li><span class="math inline">\(A_{i} \cap A_{j}=\varnothing\)</span> for <span class="math inline">\(i \neq j\)</span>,</li>
+<li><span class="math inline">\(\bigcup_{i=1}^{n} A_{i}=\Omega\)</span>.</li>
+</ol>
+<p>In this case,</p>
+<p><span class="math display">\[
+\sum_{i=1}^{n} \mathbb{P}\left(A_{i}\right)=1 .
+\]</span></p>
+<p>Partitions play a central role in Bayesian inference, where they often represent mutually exclusive hypotheses or models. For <span class="math inline">\(n=2\)</span>, we go back to a single event and its complement.</p>
+</section>
+<section id="random-variables" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="random-variables"><span class="header-section-number">12.3</span> Random Variables</h2>
+<p>A real-valued random variable <span class="math inline">\(X\)</span> is a measurable function</p>
+<p><span class="math display">\[
+X: \Omega \rightarrow \mathbb{R} .
+\]</span></p>
+<p>Rather than working directly with outcomes <span class="math inline">\(\omega \in \Omega\)</span>, probability theory is typically formulated in terms of random variables and their distributions. A random variable thus assigns a real number to each outcome, i.e.&nbsp;to each result of an experiment. Basically, <span class="math inline">\(X\)</span> tells you which quantity you measure in your experiment.</p>
+<p>Note the important distinction: in the following the random variable <span class="math inline">\(X\)</span> is a function, mapping an event to real numbers, while <span class="math inline">\(x\)</span> is the particular numerical value that it can take (e.g., in one realization).</p>
+</section>
+<section id="probability-mass-and-density-functions" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="probability-mass-and-density-functions"><span class="header-section-number">12.4</span> Probability Mass and Density Functions</h2>
+<p>If <span class="math inline">\(X\)</span> is a <strong>discrete</strong> random variable taking values in a countable set <span class="math inline">\(\left\{x_{i}\right\}\)</span>, its probability mass function (pmf) is</p>
+<p><span class="math display">\[
+p_{X}\left(x_{i}\right)=\mathbb{P}\left(X=x_{i}\right), \quad \sum_{i} p_{X}\left(x_{i}\right)=1
+\]</span></p>
+<p>If <span class="math inline">\(X\)</span> is a <strong>continuous</strong> random variable, it is characterized by a probability density function (pdf) <span class="math inline">\(f_{X}(x)\)</span> such that</p>
+<p><span class="math display">\[
+\mathbb{P}(a \leq X \leq b)=\int_{a}^{b} f_{X}(x) d x, \quad \int_{-\infty}^{\infty} f_{X}(x) d x=1
+\]</span></p>
+<p>Probabilities at a single point vanish in the continuous case:</p>
+<p><span class="math display">\[
+\mathbb{P}(X=x)=0
+\]</span></p>
+<p>it only makes sense to ask the probability that <span class="math inline">\(X\)</span> follows within an (infinitesimal) interval.</p>
+</section>
+<section id="cumulative-distribution-function" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="cumulative-distribution-function"><span class="header-section-number">12.5</span> Cumulative Distribution Function</h2>
+<p>The cumulative distribution function (CDF) of a random variable <span class="math inline">\(X\)</span> is defined as</p>
+<p><span class="math display">\[
+F_{X}(x)=\mathbb{P}(X \leq x)
+\]</span></p>
+<p>It is non-decreasing, right-continuous, and satisfies</p>
+<p><span class="math display">\[
+\lim _{x \rightarrow-\infty} F_{X}(x)=0, \quad \lim _{x \rightarrow+\infty} F_{X}(x)=1
+\]</span></p>
+<p>If <span class="math inline">\(X\)</span> admits a density <span class="math inline">\(f_{X}\)</span>, then</p>
+<p><span class="math display">\[
+F_{X}(x)=\int_{-\infty}^{x} f_{X}(t) d t, \quad f_{X}(x)=\frac{d}{d x} F_{X}(x)
+\]</span></p>
+<p>Instead, for the discrete random variable X with <span class="math inline">\(\operatorname{pmf} p_{X}\)</span> the CDF reads</p>
+<p><span class="math display">\[
+F_{X}(x)=\sum_{y \leq x} P(X=y)=\sum_{i: x_{i} \leq x} p_{X}\left(x_{i}\right) . \tag{7}
+\]</span></p>
+<p>In this case the CDF is made up of jumps of value <span class="math inline">\(p_{X}\left(x_{i}\right)=F\left(x_{i}\right)-F\left(x_{i-1}\right)\)</span>.</p>
+</section>
+<section id="joint-distributions" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="joint-distributions"><span class="header-section-number">12.6</span> Joint Distributions</h2>
+<p>Given two random variables <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span>, their joint distribution associated to <span class="math inline">\(P(X \cap Y)\)</span> is described by:</p>
+<ul>
+<li>a joint <span class="math inline">\(\operatorname{pmf} p_{X, Y}(x, y)\)</span> in the discrete case;</li>
+<li>a joint pdf <span class="math inline">\(f_{X, Y}(x, y)\)</span> in the continuous case.</li>
+</ul>
+<p>Marginal distributions are obtained by summation or integration:</p>
+<p><span class="math display">\[
+p_{X}(x)=\sum_{y} p_{X, Y}(x, y), \quad f_{X}(x)=\int f_{X, Y}(x, y) d y
+\]</span></p>
+</section>
+<section id="conditional-probability-and-conditional-distributions" class="level2" data-number="12.7">
+<h2 data-number="12.7" class="anchored" data-anchor-id="conditional-probability-and-conditional-distributions"><span class="header-section-number">12.7</span> Conditional Probability and Conditional Distributions</h2>
+<p>For random variables, the conditional distribution of <span class="math inline">\(X\)</span> given <span class="math inline">\(Y=y\)</span> is defined by</p>
+<p><span class="math display">\[
+p_{X \mid Y}(x \mid y)=\frac{p_{X, Y}(x, y)}{p_{Y}(y)}, \quad f_{X \mid Y}(x \mid y)=\frac{f_{X, Y}(x, y)}{f_{Y}(y)} \tag{8}
+\]</span></p>
+<p>whenever the denominator is non-zero. The joint distribution factorizes as</p>
+<p><span class="math display">\[
+p_{X, Y}(x, y)=p_{X \mid Y}(x \mid y) p_{Y}(y), \quad f_{X, Y}(x, y)=f_{X \mid Y}(x \mid y) f_{Y}(y)
+\]</span></p>
+</section>
+<section id="expectation-and-moments" class="level2" data-number="12.8">
+<h2 data-number="12.8" class="anchored" data-anchor-id="expectation-and-moments"><span class="header-section-number">12.8</span> Expectation and Moments</h2>
+<p>The expectation (mean) of a random variable <span class="math inline">\(X\)</span> is defined as</p>
+<p><span class="math display">\[
+\mathbb{E}[X]= \begin{cases}\sum_{x} x p_{X}(x), &amp; \text { discrete case } \\ \int x f_{X}(x) d x, &amp; \text { continuous case. }\end{cases}
+\]</span></p>
+<p>More generally, for any function <span class="math inline">\(g(X)\)</span>, the expectation reads</p>
+<p><span class="math display">\[
+\mathbb{E}[g(X)]=\sum_{x} g(x) p_{X}(x) \quad \text { or } \quad \mathbb{E}[g(X)]=\int g(x) f_{X}(x) d x
+\]</span></p>
+<p>The <span class="math inline">\(n\)</span>-th <strong>raw moment</strong> (i.e., moment about zero) of <span class="math inline">\(X\)</span> is</p>
+<p><span class="math display">\[
+\mu_{n}^{\prime} \equiv \mathbb{E}\left[X^{n}\right]
+\]</span></p>
+<p>The <span class="math inline">\(n\)</span>-th <strong>central moment</strong> (i.e., moment about the mean) of <span class="math inline">\(X\)</span> is</p>
+<p><span class="math display">\[
+\mu_{n} \equiv \mathbb{E}\left[(X-\mathbb{E}[X])^{n}\right]
+\]</span></p>
+<p>and provide clearer information about the distribution’s shape. Note that <span class="math inline">\(\mu_{1}=0\)</span>, while the variance is the <span class="math inline">\(n=2\)</span> central moment, given by</p>
+<p><span class="math display">\[
+\mu_{2} \equiv \operatorname{Var}(X)=\mathbb{E}\left[(X-\mathbb{E}[X])^{2}\right]=\mathbb{E}\left[X^{2}\right]-(\mathbb{E}[X])^{2}
+\]</span></p>
+<p>The standard deviation is the <span class="math inline">\(\sqrt{\mu_{2}} \equiv \sigma\)</span>. Finally, it is customary to define the standardized moment of degree <span class="math inline">\(n\)</span> as <span class="math inline">\(\mu_{n} / \sigma^{n}\)</span> that is, the ratio of the <span class="math inline">\(n\)</span>-th central moment to the <span class="math inline">\(n\)</span>-th power of the standard deviation. It offers a scale invariant, dimensionless measure for characteristics of a distribution.</p>
+</section>
+<section id="moment-and-cumulant-generating-functions" class="level2" data-number="12.9">
+<h2 data-number="12.9" class="anchored" data-anchor-id="moment-and-cumulant-generating-functions"><span class="header-section-number">12.9</span> Moment and Cumulant Generating Functions</h2>
+<p>The moment generating function (MGF) of <span class="math inline">\(X\)</span> is defined as</p>
+<p><span class="math display">\[
+M_{X}(t)=\mathbb{E}\left[e^{t X}\right]
+\]</span></p>
+<p>when it exists in a neighborhood of <span class="math inline">\(t=0\)</span>. Then derivatives of <span class="math inline">\(M_{X}(t)\)</span> yields the <span class="math inline">\(n\)</span>th central moment of <span class="math inline">\(X\)</span>:</p>
+<p><span class="math display">\[
+\left.\frac{d^{n} M_{X}(t)}{d t^{n}}\right|_{t=0}=\mu_{n}^{\prime} \tag{9}
+\]</span></p>
+<p>The cumulant generating function (CGF) is</p>
+<p><span class="math display">\[
+K_{X}(t)=\log M_{X}(t)
+\]</span></p>
+<p>The <span class="math inline">\(n\)</span>-th cumulant <span class="math inline">\(\kappa_{n}\)</span> is obtained by</p>
+<p><span class="math display">\[
+\kappa_{n}=\left.\frac{d^{n} K_{X}(t)}{d t^{n}}\right|_{t=0}
+\]</span></p>
+<p>The first two cumulants coincide with the mean and the variance:</p>
+<p><span class="math display">\[
+\kappa_{1}=\mu_{1}^{\prime}, \quad \kappa_{2}=\mu_{2}
+\]</span></p>
+<p>Cumulants play a central role in Bayesian inference and statistical mechanics, as characterization of fluctuations and correlations.</p>
+<p>Note that MGF and CGF may not exist because the integral (sum) defining the expectation value need not converge absolutely. In this case, one can make the replacement <span class="math inline">\(t \mapsto i t\)</span> defining the characteristic function</p>
+<p><span class="math display">\[
+\varphi_{X}(t)=\mathbb{E}\left[e^{i t X}\right]
+\]</span></p>
+<p>whose derivatives give the central moments, <span class="math inline">\(\left.\frac{d^{n} \varphi_{X}(t)}{d t^{n}}\right|_{t=0}=i^{n} \mu_{n}^{\prime}\)</span>.</p>
+</section>
+<section id="an-important-comment" class="level2" data-number="12.10">
+<h2 data-number="12.10" class="anchored" data-anchor-id="an-important-comment"><span class="header-section-number">12.10</span> An important comment</h2>
+<p>All probabilities are always conditional ones! If <span class="math inline">\(I\)</span> is the background condition, related to information we have, the probability of an event <span class="math inline">\(A\)</span> is of the form <span class="math inline">\(P(A \mid I)\)</span>. It makes no sense to talk about the probability of the truth of the statement <span class="math inline">\(A\)</span> without being explicit about the conditions upon which the assignment of probability is based.</p>
+</section>
+<section id="bayes-formula" class="level2" data-number="12.11">
+<h2 data-number="12.11" class="anchored" data-anchor-id="bayes-formula"><span class="header-section-number">12.11</span> Bayes’ formula</h2>
+<p>We start from that from the definition of joint probability (6). The key observation is that the joint probability <span class="math inline">\(\mathbb{P}(A \cap B)\)</span> is symmetric in <span class="math inline">\(A\)</span> and <span class="math inline">\(B\)</span>. Therefore, provided that <span class="math inline">\(\mathbb{P}(A)&gt;0\)</span> and <span class="math inline">\(\mathbb{P}(B)&gt;0\)</span>, we may also write</p>
+<p><span class="math display">\[
+\mathbb{P}(A \cap B)=\mathbb{P}(B \mid A) \mathbb{P}(A) \tag{10}
+\]</span></p>
+<p>Equating (6) and (10) yields</p>
+<p><span class="math display">\[
+\mathbb{P}(A \mid B) \mathbb{P}(B)=\mathbb{P}(B \mid A) \mathbb{P}(A)
+\]</span></p>
+<p>that combine together to give Bayes’ formula:</p>
+<p><span class="math display">\[
+\mathbb{P}(A \mid B)=\frac{\mathbb{P}(B \mid A) \mathbb{P}(A)}{\mathbb{P}(B)} \tag{11}
+\]</span></p>
+<p>A frequently used generalization arises when <span class="math inline">\(\left\{A_{i}\right\}_{i=1}^{n}\)</span> is a partition of <span class="math inline">\(\Omega\)</span>, i.e.&nbsp;<span class="math inline">\(A_{i} \cap A_{j}=\varnothing\)</span> for <span class="math inline">\(i \neq j\)</span> and <span class="math inline">\(\bigcup_{i} A_{i}=\Omega\)</span>, with <span class="math inline">\(\mathbb{P}\left(A_{i}\right)&gt;0\)</span>. Using countable additivity,</p>
+<p><span class="math display">\[
+\mathbb{P}(B)=\sum_{i=1}^{n} \mathbb{P}\left(B \cap A_{i}\right)=\sum_{i=1}^{n} \mathbb{P}\left(B \mid A_{i}\right) \mathbb{P}\left(A_{i}\right)
+\]</span></p>
+<p>and substituting this into 11 gives</p>
+<p><span class="math display">\[
+\mathbb{P}\left(A_{k} \mid B\right)=\frac{\mathbb{P}\left(B \mid A_{k}\right) \mathbb{P}\left(A_{k}\right)}{\sum_{i=1}^{n} \mathbb{P}\left(B \mid A_{i}\right) \mathbb{P}\left(A_{i}\right)} \tag{12}
+\]</span></p>
+<p>In data analysis and inference, <span class="math inline">\(A\)</span> are parameters <span class="math inline">\(\theta\)</span> that define the model (or the models <span class="math inline">\(H\)</span> that we want to test) of the phenomenon, <span class="math inline">\(B\)</span> are the data <span class="math inline">\(D\)</span> (or <span class="math inline">\(X\)</span>) that we get from the experiment. This form emphasizes the interpretation of Bayes’ formula as an update rule, where prior probabilities are revised in light of observed information, <span class="math inline">\(B\)</span>. Note that the normalization <span class="math inline">\(\mathbb{P}(B)\)</span> is a constant independent of <span class="math inline">\(A_{k}\)</span> but has been written in terms of the data <span class="math inline">\(B\)</span> conditioned on the parameters/model.</p>
+<p>If, given a likelihood function <span class="math inline">\(p(B \mid A)\)</span>, the posterior distribution <span class="math inline">\(p(A \mid B)\)</span> is in the same probability distribution family as the prior probability distribution <span class="math inline">\(p(A)\)</span>, the prior and posterior are then called <strong>conjugate distributions</strong> with respect to that likelihood function and the prior is called a <strong>conjugate prior</strong> for the likelihood function <span class="math inline">\(p(B \mid A)\)</span>. A conjugate prior is an algebraic convenience, giving a closed-form expression for the posterior—numerical integration may be otherwise necessary.</p>
+<p>Data inference is a slide down from the summit of Bayes’ formula.</p>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>A <span class="math inline">\(\sigma\)</span>-algebra is the mathematical structure that tells you which subsets of a sample space <span class="math inline">\(\Omega\)</span> are allowed to be called events, i.e.&nbsp;which questions about the outcome are meaningful and can be assigned probabilities. An event is a yes/no question about the outcome (“Did the outcome fall in this set?” or “Did this condition occur?”). A <span class="math inline">\(\sigma\)</span>-algebra is the collection of all such questions that you decide to be able to ask, and that remain meaningful when you combine them using logic (AND, OR, NOT). We mention it here, but we heuristically ignore it in the following. See Appendix A for more details.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/01-introduction.html" class="pagination-link" aria-label="Advanced Statistics for Physics Analysis: Bayesian Inference">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Statistics for Physics Analysis: Bayesian Inference</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/03-distributions.html" class="pagination-link" aria-label="The Typical Animals Encountered in the Statistical Zoo">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The Typical Animals Encountered in the Statistical Zoo</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

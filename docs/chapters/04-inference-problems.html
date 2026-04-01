@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>14&nbsp; Inference Problems – Notes of the course Advanced Statistics for Physical Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../chapters/05-applications.html" rel="next">
+<link href="../chapters/03-distributions.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-f578c9e9380db423bddf2a16dd326e1e.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-introduction.html">Theory of Statistical Inference</a></li><li class="breadcrumb-item"><a href="../chapters/04-inference-problems.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Inference Problems</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="../">Notes of the course Advanced Statistics for Physical Analysis</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">Basics of R Programming</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter01_r_intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Chapter 1 - Introduction to R for Bayesian Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter02_flow_control.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Chapter 2 - Flow Control and Functions in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter03_data_types.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Chapter 3 - Data Types and Precision in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter04_lists_dataframes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Chapter 4 - Lists and Data Frames in R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter05_data_io_advanced.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Chapter 5 - Data Import/Output and Advanced R</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter06_graphics.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Chapter 6 - Graphics in R</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true">
+ <span class="menu-text">Probability and Statistics with R</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter07_continuous_distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7 - Continuous Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter08_discrete_distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8 - Discrete Probability Distributions</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter09_parameter_estimation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Chapter 9 - Bayesian Parameter Estimation</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/chapter10_model_comparison.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Chapter 10 - Bayesian Model Comparison</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">Theory of Statistical Inference</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Toggle section">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/01-introduction.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Advanced Statistics for Physics Analysis: Bayesian Inference</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/02-probability-theory.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Short Recap of Probability Theory</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/03-distributions.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The Typical Animals Encountered in the Statistical Zoo</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/04-inference-problems.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Inference Problems</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/05-applications.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Selected Applications</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/06-monte-carlo.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">16</span>&nbsp; <span class="chapter-title">Monte Carlo Methods</span></span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../chapters/07-appendices.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">17</span>&nbsp; <span class="chapter-title">Appendices</span></span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul class="collapse">
+  <li><a href="#model-comparison" id="toc-model-comparison" class="nav-link active" data-scroll-target="#model-comparison"><span class="header-section-number">14.1</span> Model comparison</a></li>
+  <li><a href="#parameter-estimation" id="toc-parameter-estimation" class="nav-link" data-scroll-target="#parameter-estimation"><span class="header-section-number">14.2</span> Parameter estimation</a></li>
+  <li><a href="#point-estimation" id="toc-point-estimation" class="nav-link" data-scroll-target="#point-estimation"><span class="header-section-number">14.3</span> Point estimation</a></li>
+  <li><a href="#reliability-of-parameter-estimation" id="toc-reliability-of-parameter-estimation" class="nav-link" data-scroll-target="#reliability-of-parameter-estimation"><span class="header-section-number">14.4</span> Reliability of parameter estimation</a></li>
+  <li><a href="#comparing-to-frequentist-parameter-estimation" id="toc-comparing-to-frequentist-parameter-estimation" class="nav-link" data-scroll-target="#comparing-to-frequentist-parameter-estimation"><span class="header-section-number">14.5</span> Comparing to frequentist parameter estimation</a></li>
+  <li><a href="#prediction" id="toc-prediction" class="nav-link" data-scroll-target="#prediction"><span class="header-section-number">14.6</span> Prediction</a></li>
+  <li><a href="#comparing-to-prediction-in-the-frequentist-paradigm" id="toc-comparing-to-prediction-in-the-frequentist-paradigm" class="nav-link" data-scroll-target="#comparing-to-prediction-in-the-frequentist-paradigm"><span class="header-section-number">14.7</span> Comparing to prediction in the frequentist paradigm</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../chapters/01-introduction.html">Theory of Statistical Inference</a></li><li class="breadcrumb-item"><a href="../chapters/04-inference-problems.html"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Inference Problems</span></a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">14</span>&nbsp; <span class="chapter-title">Inference Problems</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Here we explore the different inference tasks, also presenting short comparisons between Bayesian and inference approaches. In frequentist inference, probability refers to long-run frequencies under repeated sampling. Parameters are fixed but unknown, data are random. In Bayesian inference, probability quantifies uncertainty or degree of belief. Parameters (or models) are treated as random variables.</p>
+<section id="model-comparison" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="model-comparison"><span class="header-section-number">14.1</span> Model comparison</h2>
+<p>In Bayesian inference, a specific hypothesis <span class="math inline">\(H\)</span> is identified with a probabilistic model for the data <span class="math inline">\(D\)</span>. We assign a prior probability <span class="math inline">\(P(H)\)</span> to each competing hypothesis.</p>
+<p>Let <span class="math inline">\(\left\{H_{0}, H_{1}\right\}\)</span> be two mutually exclusive and exhaustive hypotheses, so that</p>
+<p><span class="math display">\[
+P\left(H_{0}\right)+P\left(H_{1}\right)=P\left(H_{0} \cup H_{1}\right)=P(\Omega)=1 \tag{59}
+\]</span></p>
+<p>(and the same holds for the conditionals <span class="math inline">\(P\left(H_{i} \mid D\right)\)</span>) each of which specifies a likelihood <span class="math inline">\(P\left(D \mid H_{i}\right)\)</span>. Note that, if the model depends on parameters <span class="math inline">\(\theta\)</span>, then</p>
+<p><span class="math display">\[
+P(D \mid H)=\int P(D \mid \theta, H) P(\theta \mid H) d \theta
+\]</span></p>
+<p>This quantity is called the <strong>marginal likelihood</strong> or <strong>model evidence</strong>. Hereafter, to illustrate the theory, we stick to the simplest case of two competing models without parameters (like ‘true’ or ‘false’).</p>
+<p>Applying Bayes’ theorem to the hypotheses (treated as a random variable that can take only two values) gives</p>
+<p><span class="math display">\[
+P\left(H_{i} \mid D\right)=\frac{P\left(D \mid H_{i}\right) P\left(H_{i}\right)}{P(D)} \tag{60}
+\]</span></p>
+<p>where the normalization is</p>
+<p><span class="math display">\[
+P(D)=P\left(D \mid H_{0}\right) P\left(H_{0}\right)+P\left(D \mid H_{1}\right) P\left(H_{1}\right) \tag{61}
+\]</span></p>
+<p>The <strong>posterior odds ratio</strong> <span class="math inline">\(R\)</span> then reads,</p>
+<p><span class="math display">\[
+R \equiv \frac{P\left(H_{1} \mid D\right)}{P\left(H_{0} \mid D\right)}=\frac{P\left(D \mid H_{1}\right)}{P\left(D \mid H_{0}\right)} \frac{P\left(H_{1}\right)}{P\left(H_{0}\right)}=\mathrm{BF} \frac{P\left(H_{1}\right)}{P\left(H_{0}\right)} \tag{62}
+\]</span></p>
+<p>where the quantity</p>
+<p><span class="math display">\[
+\mathrm{BF} \equiv \frac{P\left(D \mid H_{1}\right)}{P\left(D \mid H_{0}\right)} \tag{63}
+\]</span></p>
+<p>is called the <strong>Bayes factor</strong> and tell us the proportionality factor between the posterior odds and the prior odds. With this definition, we can rewrite 60, for the posterior as</p>
+<p><span class="math display">\[
+P\left(H_{0} \mid D\right)=\frac{1}{1+R}, \quad P\left(H_{1} \mid D\right)=\frac{1}{1+\frac{1}{R}} \tag{64}
+\]</span></p>
+<p>We say that <span class="math inline">\(H_{1}\)</span> is more likely than <span class="math inline">\(H_{0}\)</span> conditional on the data <span class="math inline">\(D\)</span>, if the odds ratio <span class="math inline">\(R&gt;1\)</span>. Often times, statisticians rather report <span class="math inline">\(\mathrm{BS}&gt;1\)</span> as a criterion for <span class="math inline">\(H_{1}\)</span> to be more likely than <span class="math inline">\(H_{0}\)</span>. The reason being that BS contains only objective information coming from data, discarding “subjectivity” from the priors.</p>
+<section id="marginal-likelihood-and-occams-razor" class="level3" data-number="14.1.1">
+<h3 data-number="14.1.1" class="anchored" data-anchor-id="marginal-likelihood-and-occams-razor"><span class="header-section-number">14.1.1</span> Marginal likelihood and Occam’s razor</h3>
+<p>Suppose hypothesis <span class="math inline">\(H\)</span> has parameter <span class="math inline">\(\theta \in \Theta\)</span> with prior density <span class="math inline">\(\pi(\theta)\)</span>. Then</p>
+<p><span class="math display">\[
+P(D \mid H)=\int_{\Theta} P(D \mid \theta) \pi(\theta) d \theta \tag{65}
+\]</span></p>
+<p>We assume that the likelihood <span class="math inline">\(P(D \mid \theta)\)</span> is sharply peaked around its maximum <span class="math inline">\(\hat{\theta}\)</span> and the prior <span class="math inline">\(\pi(\theta)\)</span> is smooth on the scale of the likelihood peak. Applying Laplace’s approximation,</p>
+<p><span class="math display">\[
+P(D \mid H) \approx \underbrace{P(D \mid \hat{\theta})}_{\text {best fit }} \times \underbrace{\pi(\hat{\theta}) \Delta \theta_{\mathrm{eff}}}_{\text {Occam factor }} \tag{66}
+\]</span></p>
+<p>where <span class="math inline">\(\Delta \theta_{\text {eff }}\)</span> is the effective width of the likelihood peak. The <strong>Occam factor</strong> gives the fraction of parameter space that fits the data. Complex models spread prior mass over large parameter volumes, with only a small region that fits the data well, i.e.&nbsp;<span class="math inline">\(\pi(\hat{\theta}) \Delta \theta_{\text {eff }} \ll 1\)</span>. The integral automatically penalizes unused parameter space, according to <strong>Occam’s razor</strong>:</p>
+<blockquote class="blockquote">
+<p>Even though a more flexible model (more parameters) can fit the data better at its optimal parameter value, its overall predictive performance may be worse because most of its parameter space does not explain the data well.</p>
+</blockquote>
+<p>As a simple illustration, consider the two models</p>
+<ul>
+<li><span class="math inline">\(H_{0}: \theta=\theta_{0}\)</span>, with no free parameters,</li>
+<li><span class="math inline">\(H_{1}: \theta \in[a, b]\)</span> with uniform prior</li>
+</ul>
+<p>that lead to the posterior distributions, respectively,</p>
+<p><span class="math display">\[
+\begin{align*}
+&amp; P\left(D \mid H_{0}\right)=P\left(D \mid \theta_{0}\right) \\
+&amp; P\left(D \mid H_{1}\right)=\frac{1}{b-a} \int_{a}^{b} P(D \mid \theta) d \theta \approx P(D \mid \hat{\theta}) \frac{\Delta \theta_{\mathrm{eff}}}{b-a} \tag{67-68}
+\end{align*}
+\]</span></p>
+<p>By definition of max, <span class="math inline">\(P\left(D \mid \theta_{0}\right) \leq P(D \mid \hat{\theta})\)</span>, meaning that <span class="math inline">\(H_{1}\)</span> can fit better the data. However, if <span class="math inline">\(\theta_{\text {eff }} \ll b-a\)</span>, we end up with <span class="math inline">\(P\left(D \mid H_{1}\right)&lt;P\left(D \mid H_{0}\right)\)</span>. Hence, <span class="math inline">\(P\left(D \mid H_{1}\right)\)</span> will be smaller than <span class="math inline">\(P\left(D \mid H_{0}\right)\)</span> despite having a higher maximum likelihood.</p>
+<p>Marginal likelihoods balance fit quality and model complexity, with Occam’s razor being a mathematical consequence of integration over parameters.</p>
+</section>
+</section>
+<section id="parameter-estimation" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="parameter-estimation"><span class="header-section-number">14.2</span> Parameter estimation</h2>
+<p>A <strong>generative model</strong> is a theoretical model that predicts observable data from a set of parameters. The simplest example of a generative model is a straight line:</p>
+<p><span class="math display">\[
+f(x ; a, b)=a+b x \tag{69}
+\]</span></p>
+<p>where <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are unknown parameters. Measurements do not exactly follow the model due to noise. We therefore write</p>
+<p><span class="math display">\[
+y=f(x ; a, b)+\varepsilon \tag{70}
+\]</span></p>
+<p>where <span class="math inline">\(\varepsilon\)</span> represents measurement noise. The statistical properties of <span class="math inline">\(\varepsilon\)</span> are described by a <strong>measurement model</strong>, which may itself depend on additional parameters. Given a data set</p>
+<p><span class="math display">\[
+D=\left\{y_{j}, x_{j}\right\} \tag{71}
+\]</span></p>
+<p>our goal is to infer the values of the parameters of the generative model.</p>
+<p>We denote by <span class="math inline">\(\theta\)</span> the full set of parameters, including both generative and measurement parameters. Bayesian inference aims to determine the posterior probability density function</p>
+<p><span class="math display">\[
+P(\theta \mid D, H), \tag{72}
+\]</span></p>
+<p>where <span class="math inline">\(H\)</span> represents the background hypotheses, including the the choice of the generative model and the choice of the measurement (noise) model.</p>
+<p>Again, Bayes’ theorem adapted to this setup states</p>
+<p><span class="math display">\[
+P(\theta \mid D, H)=\frac{P(D \mid \theta, H) P(\theta \mid H)}{P(D \mid H)} . \tag{73}
+\]</span></p>
+<p>The <strong>likelihood</strong> <span class="math inline">\(P(D \mid \theta, H)\)</span> is the probability of obtaining the measured data assuming specific values of the parameters. For example, assume that each measurement of <span class="math inline">\(y\)</span> at fixed <span class="math inline">\(x\)</span> is affected by Gaussian noise with variance <span class="math inline">\(\sigma^{2}\)</span>. Then the probability of a single measurement is</p>
+<p><span class="math display">\[
+P(y \mid \theta, H)=\frac{1}{\sigma \sqrt{2 \pi}} \exp \left[-\frac{(y-f(x ; a, b))^{2}}{2 \sigma^{2}}\right] . \tag{74}
+\]</span></p>
+<p>This expresses the fact that measurements are normally distributed around the true model value. In this case, <span class="math inline">\(\theta=(a, b, \sigma)\)</span> combining both generative and measurement parameters.</p>
+<p>The <strong>posterior probability</strong> <span class="math inline">\(P(\theta \mid D, H)\)</span> is the probability density of the parameters given the observed data and background information. Conceptually, Bayesian inference is straightforward: we update our prior knowledge using the information contained in the data. The <strong>prior probability</strong> <span class="math inline">\(P(\theta \mid H)\)</span> encapsulates all information available before observing the data. It reflects the reality that scientific reasoning is never based on data alone.</p>
+<p>The quantity</p>
+<p><span class="math display">\[
+P(D \mid H)=\int P(D \mid \theta, H) P(\theta \mid H) d \theta \tag{75}
+\]</span></p>
+<p>is called the <strong>evidence</strong>, which is obtained by marginalizing over the parameters. The evidence plays a crucial role in model comparison, normalization of the posterior and computation of expectation values. In simple cases the integral can be evaluated analytically. For most realistic problems, however, numerical techniques such as Markov Chain Monte Carlo (MCMC) are required.</p>
+</section>
+<section id="point-estimation" class="level2" data-number="14.3">
+<h2 data-number="14.3" class="anchored" data-anchor-id="point-estimation"><span class="header-section-number">14.3</span> Point estimation</h2>
+<p>In the Bayesian paradigm the posterior distribution is the key object that summarizes our belief about the parameters after we have analyzed the data. However, we may be interested to get a single value, known as <strong>point estimate</strong>, which is to serve as a “best guess” of an unknown population parameter</p>
+<p>Let <span class="math inline">\(X\)</span> denote the observed data and <span class="math inline">\(\theta\)</span> an unknown parameter. In Bayesian inference, a point estimator <span class="math inline">\(\hat{\theta}(X)\)</span> is a function of the observed data <span class="math inline">\(X\)</span> (hence, itself a random variable).</p>
+<p>It is defined as the argument minimizing the posterior expected loss:</p>
+<p><span class="math display">\[
+\hat{\theta}(x)=\arg \min _{a} \mathbb{E}[L(a, \theta) \mid X=x]=\arg \min _{a} \int L(a, \theta) p(\theta \mid x) d \theta \tag{76}
+\]</span></p>
+<p>Different choices of the loss function <span class="math inline">\(L(a, \theta)\)</span> lead to different optimal estimators. The loss function quantifies the cost of choosing <span class="math inline">\(a\)</span> when the true parameter is <span class="math inline">\(\theta\)</span>.</p>
+<section id="map-estimator" class="level3" data-number="14.3.1">
+<h3 data-number="14.3.1" class="anchored" data-anchor-id="map-estimator"><span class="header-section-number">14.3.1</span> MAP estimator</h3>
+<p>The MAP estimator selects the single most probable value of the parameter given the observed data.</p>
+<p>Consider the <span class="math inline">\(0-1\)</span> loss</p>
+<p><span class="math display">\[
+L(a, \theta)= \begin{cases}0, &amp; a=\theta \\ 1, &amp; a \neq \theta\end{cases} \tag{77}
+\]</span></p>
+<p>This loss is strictly appropriate for discrete parameters, or for continuous parameters when interpreted in an infinitesimal neighborhood sense. Namely, the <span class="math inline">\(0-1\)</span> loss function is a Kronecker delta in the discrete case, or a (smoothed) Dirac delta in the continuous case.</p>
+<p>The posterior expected loss is</p>
+<p><span class="math display">\[
+\mathbb{E}[L(a, \theta) \mid x]=\sum_{\theta \neq a} L(a, \theta) p(\theta \mid x)+p(\theta=a \mid x) \underbrace{L(\theta, \theta)}_{=0}=1-p(\theta=a \mid x) . \tag{78}
+\]</span></p>
+<p>Minimizing this quantity is equivalent to maximizing the posterior density, yielding the <strong>maximum a posteriori estimator</strong>:</p>
+<p><span class="math display">\[
+\hat{\theta}_{\mathrm{MAP}}=\arg \max _{\theta} p(\theta \mid x) \tag{79}
+\]</span></p>
+<p>There are some <strong>caveats with MAP</strong> that need to be listed:</p>
+<ul>
+<li><strong>Ill-defined decision problem in continuous spaces</strong>. If <span class="math inline">\(\theta\)</span> is continuously distributed, then</li>
+</ul>
+<p><span class="math display">\[
+p(\theta=a \mid x)=0 \quad \text { for all } a
+\]</span></p>
+<p>so all actions incur the same posterior expected loss. As a result, the <span class="math inline">\(0-1\)</span> loss does not define a meaningful optimization problem without further regularization. In continuous spaces, the MAP estimator can only be justified via a limiting procedure, for example by considering losses of the form</p>
+<p><span class="math display">\[
+L_{\varepsilon}(\theta, a)=\mathbf{1}_{|\theta-a|&gt;\varepsilon}
+\]</span></p>
+<p>and letting <span class="math inline">\(\varepsilon \rightarrow 0\)</span>. The resulting estimator depends on how this limit is taken. In this sense, MAP is a limiting, not intrinsic, estimator.</p>
+<ul>
+<li><strong>Lack of invariance under reparametrization</strong>. The <span class="math inline">\(0-1\)</span> loss is not invariant under smooth changes of variables. For example, imagine that we estimated <span class="math inline">\(\theta\)</span> by MAP and later re-parametrize to a <span class="math inline">\(\phi=g(\theta)\)</span>, for some smooth function <span class="math inline">\(g\)</span>. In general, <span class="math inline">\(g\left(\hat{\theta}_{\text {MAP }}\right) \neq \hat{\phi}_{\text {MAP }}\)</span> where <span class="math inline">\(\hat{\phi}_{\text {MAP }}\)</span> is the MAP estimator of <span class="math inline">\(\phi\)</span> obtained as the maximum of the distribution <span class="math inline">\(p_{\phi}(\phi \mid x)=p_{\theta}(\theta \mid x)\left|\operatorname{det} \frac{d \theta}{d \phi}\right|\)</span> with <span class="math inline">\(\theta=g^{-1}(\phi)\)</span>. The Jacobian determinant of the change of variable shifts the maximum unless it is constant, or varies slowly near the mode.</li>
+</ul>
+<p>Consequently, the MAP estimator depends on the chosen parametrization, in contrast with estimators such as the posterior mean that transform covariantly.</p>
+<ul>
+<li><strong>Insensitivity to posterior geometry</strong>. The <span class="math inline">\(0-1\)</span> loss distinguishes only whether the estimate equals the true parameter, ignoring the magnitude of errors. This causes the MAP estimator to depend solely on the local behavior of the posterior density near its maximum, discarding information about spread, skewness, or multimodality.</li>
+</ul>
+<p>But if the posterior is unimodal and sharply peaked, MAP is well behaving since it is often close to mean/median, with the advantage of being computationally convenient.</p>
+</section>
+<section id="lms-estimator-the-posterior-mean" class="level3" data-number="14.3.2">
+<h3 data-number="14.3.2" class="anchored" data-anchor-id="lms-estimator-the-posterior-mean"><span class="header-section-number">14.3.2</span> LMS estimator: the posterior mean</h3>
+<p>Given the squared-error loss</p>
+<p><span class="math display">\[
+L(a, \theta)=(a-\theta)^{2} \tag{80}
+\]</span></p>
+<p>the posterior expected loss is</p>
+<p><span class="math display">\[
+\begin{align*}
+\mathbb{E}\left[(a-\theta)^{2} \mid x\right]=\int(a-\theta)^{2} p(\theta \mid x) d \theta &amp; =a^{2}+\mathbb{E}[\theta \mid x]^{2}-2 a \mathbb{E}[\theta \mid x] \\
+&amp; =(a-\mathbb{E}[\theta \mid x])^{2}+\operatorname{Var}(\theta \mid x) \tag{81-82}
+\end{align*}
+\]</span></p>
+<p>This expression is minimized when the parameter <span class="math inline">\(a\)</span> coincides with the posterior mean,</p>
+<p><span class="math display">\[
+\hat{\theta}_{\mathrm{LMS}}=\mathbb{E}[\theta \mid x] \tag{83}
+\]</span></p>
+<p>which is called the <strong>least mean square (LMS) estimator</strong>. Hence, the posterior mean minimizes the expected squared estimation error.</p>
+<p>There are some <strong>caveats with LMS</strong> that need to be listed:</p>
+<ul>
+<li><strong>Non-existence of the posterior mean</strong>. The LMS estimator is well-defined only if the posterior distribution has a finite first moment. Heavy-tailed posteriors or the use of improper priors may lead to divergent posterior means, even when the posterior itself is normalizable.</li>
+<li><strong>Sensitivity to posterior tails</strong>. Because squared loss penalizes large deviations quadratically, the posterior mean can be strongly influenced by small amounts of posterior mass in the tails. As a consequence, rare but extreme parameter values may dominate the estimate.</li>
+<li><strong>Poor representativeness for multimodal posteriors</strong>. For multimodal posterior distributions, the posterior mean may lie in regions of low posterior density, for instance between well-separated modes. In such cases, the LMS estimator may not correspond to any “typical” parameter value.</li>
+<li><strong>Violation of natural constraints</strong>. When the parameter space is constrained, the posterior mean may fail to respect these constraints (e.g.&nbsp;positivity, boundedness, or structural conditions), potentially yielding estimates that are not physically or statistically meaningful.</li>
+<li><strong>Computational sensitivity in high dimensions</strong>. In high-dimensional or complex models, accurate computation of posterior means can be challenging. Monte Carlo estimators of expectations may converge slowly and be sensitive to sampling error, particularly in the presence of heavy tails.</li>
+</ul>
+<p>Despite these caveats, the LMS estimator remains a central tool in Bayesian inference due to its invariance properties, admissibility under squared loss, and full use of the posterior distribution.</p>
+</section>
+<section id="other-common-loss-functions" class="level3" data-number="14.3.3">
+<h3 data-number="14.3.3" class="anchored" data-anchor-id="other-common-loss-functions"><span class="header-section-number">14.3.3</span> Other common loss functions</h3>
+<p>For the loss</p>
+<p><span class="math display">\[
+L(a, \theta)=|a-\theta| \tag{84}
+\]</span></p>
+<p>one can show that the optimal estimator is the <strong>posterior median</strong>. Indeed, for continuous variables we can differentiate the posterior expected loss</p>
+<p><span class="math display">\[
+\partial_{a} \mathbb{E}[L(a, \theta) \mid x]=\int \operatorname{sgn}(a-\theta) p(\theta \mid x) d \theta=\mathbb{P}(\theta&gt;a)-\mathbb{P}(\theta&lt;a) \tag{85}
+\]</span></p>
+<p>and set the result to zero to obtain</p>
+<p><span class="math display">\[
+a \text { such that } \mathbb{P}(\theta&gt;a \mid x)=\mathbb{P}(\theta&lt;a \mid x) \tag{86}
+\]</span></p>
+<p>which is satisfied if <span class="math inline">\(a\)</span> is the median of the posterior.</p>
+<p>Asymmetric loss functions lead to posterior quantiles as optimal estimators, allowing different penalties for over- and under-estimation.</p>
+</section>
+<section id="the-risk-function" class="level3" data-number="14.3.4">
+<h3 data-number="14.3.4" class="anchored" data-anchor-id="the-risk-function"><span class="header-section-number">14.3.4</span> The risk function</h3>
+<p>The loss function <span class="math inline">\(L(a, \theta)\)</span> quantifies the cost of choosing an action <span class="math inline">\(a\)</span> when the true parameter value is <span class="math inline">\(\theta\)</span>. To assess the overall performance of a point estimator <span class="math inline">\(\hat{\theta}(X)\)</span>, one introduces the <strong>risk function</strong>, defined as the expected loss <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</p>
+<p>In Bayesian inference, the parameter itself is modeled as a random variable. Conditioning on the observed data <span class="math inline">\(X=x\)</span>, one defines the <strong>posterior risk</strong> of an action <span class="math inline">\(a\)</span> as</p>
+<p><span class="math display">\[
+\rho(a \mid x)=\mathbb{E}[L(a, \theta) \mid X=x]=\int L(a, \theta) p(\theta \mid x) d \theta \tag{88}
+\]</span></p>
+<p>The Bayesian point estimator is then obtained by minimizing the posterior risk:</p>
+<p><span class="math display">\[
+\hat{\theta}(x)=\arg \min _{a} \rho(a \mid x) \tag{89}
+\]</span></p>
+<p>This local, data-dependent optimization problem leads directly to the estimators discussed above (MAP, posterior mean, median, etc.), each corresponding to a specific choice of loss function.</p>
+<p>One can then define the <strong>Bayes risk</strong>, obtained by averaging over all parameters value and data the loss function</p>
+<p><span class="math display">\[
+\mathcal{R} \equiv \int L(a, \theta) p(\theta, x) d \theta d x=\int p(x) d x \underbrace{\int L(a, \theta) p(\theta \mid x) d \theta}_{\rho(a, x)} \tag{90}
+\]</span></p>
+<p>which can also be written as the posterior risk averaged over the data. An estimator that minimizes the Bayes risk is called a <strong>Bayes estimator</strong>. Under mild regularity conditions, minimizing the posterior risk pointwise in <span class="math inline">\(x\)</span> yields a Bayes estimator, establishing the equivalence between posterior expected loss minimization and global Bayes optimality. Namely, if we ask which function <span class="math inline">\(\hat{a}(x)\)</span> minimizes the functional <span class="math inline">\(\mathcal{R}\)</span> we obtain</p>
+<p><span class="math display">\[
+0=\frac{\delta \mathcal{R}}{\delta \hat{a}(x)}=\int p(x) \frac{\delta \rho(\hat{a}, x)}{\delta \hat{a}} d x \quad \Longrightarrow \quad \frac{\delta \rho(\hat{a}, x)}{\delta \hat{a}}=0 \tag{91}
+\]</span></p>
+<p>Since <span class="math inline">\(p(x)&gt;0\)</span> we have concluded that the posterior risk must be minimized, which is precisely condition 89). We therefore conclude that the point estimator <span class="math inline">\(\hat{\theta}(x)\)</span> that minimize the expected loss “pointwise” also minimize the risk “globally”.</p>
+</section>
+</section>
+<section id="reliability-of-parameter-estimation" class="level2" data-number="14.4">
+<h2 data-number="14.4" class="anchored" data-anchor-id="reliability-of-parameter-estimation"><span class="header-section-number">14.4</span> Reliability of parameter estimation</h2>
+<p>Once the posterior distribution <span class="math inline">\(P(\theta \mid D, H)\)</span> has been obtained, an important question arises: how reliable are the inferred parameter values? The answer depends strongly on the shape of the posterior distribution.</p>
+<section id="peaked-posteriors-and-gaussian-approximation" class="level3" data-number="14.4.1">
+<h3 data-number="14.4.1" class="anchored" data-anchor-id="peaked-posteriors-and-gaussian-approximation"><span class="header-section-number">14.4.1</span> Peaked Posteriors and Gaussian Approximation</h3>
+<p>In many favorable situations, the posterior distribution is unimodal and is sharply peaked around the MAP estimate <span class="math inline">\(\hat{\theta}_{\mathrm{MAP}}\)</span>, such that the mode does not differ much from the mean and the median. It is often convenient to work with the logarithm of the posterior,</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta)=\log P(\theta \mid D, H) \tag{92}
+\]</span></p>
+<p>which reaches its maximum at the same point <span class="math inline">\(\hat{\theta}_{\text {MAP }}\)</span>. Given that the posterior is sufficiently narrow, we can perform a Taylor expansion of <span class="math inline">\(\mathcal{L}(\theta)\)</span> around <span class="math inline">\(\hat{\theta}_{\text {MAP }}\)</span>:</p>
+<p><span class="math display">\[
+\mathcal{L}(\theta) \simeq \mathcal{L}(\hat{\theta})-\frac{1}{2}(\theta-\hat{\theta})^{\mathrm{T}} \boldsymbol{H}(\theta-\hat{\theta}) \tag{93}
+\]</span></p>
+<p>where <span class="math inline">\(\boldsymbol{H}\)</span> is the Hessian matrix of second derivatives,</p>
+<p><span class="math display">\[
+H_{i j}=-\left.\frac{\partial^{2} \mathcal{L}}{\partial \theta_{i} \partial \theta_{j}}\right|_{\hat{\theta}}&gt;0 \tag{94}
+\]</span></p>
+<p>Under this approximation, the posterior becomes Gaussian <span class="math inline">\(P(\theta \mid D, H) \approx \mathcal{N}(\hat{\theta}, \boldsymbol{C})\)</span> with covariance matrix <span class="math inline">\(\boldsymbol{C}=\boldsymbol{H}^{-1}\)</span>. The diagonal elements of <span class="math inline">\(\boldsymbol{C}\)</span> provide estimates of the parameter variances,</p>
+<p><span class="math display">\[
+\sigma_{i}^{2}=C_{i i} \tag{95}
+\]</span></p>
+<p>while the off-diagonal elements quantify correlations between parameters. One can then provide the final estimate for the vector if parameter <span class="math inline">\(\theta=\hat{\theta}_{\mathrm{MAP}} \pm \operatorname{diag}(\boldsymbol{C})\)</span>.</p>
+</section>
+<section id="credible-intervals" class="level3" data-number="14.4.2">
+<h3 data-number="14.4.2" class="anchored" data-anchor-id="credible-intervals"><span class="header-section-number">14.4.2</span> Credible intervals</h3>
+<p>In many realistic inference problems, the posterior distribution is not well approximated by a Gaussian since it may be broad, very asymmetric, multimodal, or truncated by parameter boundaries. In such cases, quoting a single best-fit value and a symmetric error bar can be misleading.</p>
+<p>A more appropriate characterization of parameter uncertainty is given by <strong>credible intervals</strong>. For a parameter <span class="math inline">\(\theta_{i}\)</span>, a credible interval <span class="math inline">\(\left[\theta_{i}^{-}, \theta_{i}^{+}\right]\)</span>at credibility level <span class="math inline">\(\gamma\)</span> satisfies</p>
+<p><span class="math display">\[
+\gamma \equiv \int_{\theta_{i}^{-}}^{\theta_{i}^{+}} P\left(\theta_{i} \mid D, H\right) d \theta_{i} \tag{96}
+\]</span></p>
+<p>where <span class="math inline">\(P\left(\theta_{i} \mid D, H\right)\)</span> is the marginal posterior for <span class="math inline">\(\theta_{i}\)</span>. Unlike frequentist confidence intervals (see later), credible intervals have a direct probabilistic interpretation: the parameter lies within the interval with probability <span class="math inline">\(\gamma\)</span>, given the data and the model.</p>
+<p>Common choices include <strong>central credible intervals</strong> and <strong>highest posterior density (HPD) intervals</strong>. A central credible interval at credibility level <span class="math inline">\(\gamma\)</span> is defined by excluding equal probability mass from both tails of the posterior distribution. Hence, the interval <span class="math inline">\(\left[\theta_{i}^{-}, \theta_{i}^{+}\right]\)</span>satisfies</p>
+<p><span class="math display">\[
+\int_{-\infty}^{\theta^{-}} p\left(\theta_{i}\right) d \theta_{i}=\int_{\theta^{+}}^{\infty} p\left(\theta_{i}\right) d \theta_{i}=\frac{1-\gamma}{2} \tag{97}
+\]</span></p>
+<p>For a Gaussian posterior, the central credible interval coincides with the familiar <span class="math inline">\(\hat{\theta} \pm n \sigma\)</span> interval, with <span class="math inline">\(\gamma \simeq 68 \%\)</span> at <span class="math inline">\(n=1\)</span>, <span class="math inline">\(\gamma \simeq 95 \%\)</span> at <span class="math inline">\(n=1.96\)</span>, and <span class="math inline">\(\gamma \simeq 99.7 \%\)</span> at <span class="math inline">\(n=3\)</span>. For asymmetric or non-Gaussian posteriors, however, the resulting interval need not be symmetric around any point estimate.</p>
+<p>A <strong>highest posterior density (HPD) interval</strong> at credibility level <span class="math inline">\(\gamma\)</span> is defined as the region of parameter space containing probability mass <span class="math inline">\(\gamma\)</span> with the highest posterior density. Formally, the HPD interval is given by</p>
+<p><span class="math display">\[
+\mathrm{HPD}_{\gamma}=\left\{\theta: p\left(\theta_{i}\right) \geq k_{\gamma}\right\} \tag{98}
+\]</span></p>
+<p>where the threshold <span class="math inline">\(k_{\gamma}\)</span> is chosen such that</p>
+<p><span class="math display">\[
+\int_{p\left(\theta_{i}\right) \geq k_{\alpha}} p\left(\theta_{i}\right) d \theta_{i}=\gamma \tag{99}
+\]</span></p>
+<p>By construction, every point inside an HPD interval has a higher posterior density than any point outside. Among all regions with probability content <span class="math inline">\(\gamma\)</span>, the HPD interval has minimum width. For unimodal posterior distributions, the HPD region is a single connected interval, while for multimodal posteriors, it may consist of multiple disjoint intervals. In the special case of a symmetric unimodal distribution, the HPD and central credible intervals coincide.</p>
+<p>The reliability of parameter estimates should always be assessed by inspecting the full posterior distribution, in particular checking for asymmetries, long tails, or verifying the validity of Gaussian approximations. When necessary, credible intervals should be reported rather than bare point estimates.</p>
+</section>
+</section>
+<section id="comparing-to-frequentist-parameter-estimation" class="level2" data-number="14.5">
+<h2 data-number="14.5" class="anchored" data-anchor-id="comparing-to-frequentist-parameter-estimation"><span class="header-section-number">14.5</span> Comparing to frequentist parameter estimation</h2>
+<p>In the frequentist approach, model parameters are treated as fixed but unknown quantities. Randomness enters only through the data, which are assumed to be realizations of a random process governed by the true parameter values. The goal of parameter estimation is to construct an estimator, that is, a function of the data used to infer the unknown parameters.</p>
+<p>Let <span class="math inline">\(\theta\)</span> denote an unknown parameter and let</p>
+<p><span class="math display">\[
+D=\left\{x_{1}, \ldots, x_{N}\right\} \tag{100}
+\]</span></p>
+<p>be a set of independent observations drawn from a probability distribution <span class="math inline">\(p(x \mid \theta)\)</span>. An estimator of <span class="math inline">\(\theta\)</span> is a statistic</p>
+<p><span class="math display">\[
+\hat{\theta}=\hat{\theta}(D) \tag{101}
+\]</span></p>
+<p>which is itself a random variable due to the randomness of the data.</p>
+<p>A common construction principle is the <strong>maximum likelihood estimator (MLE)</strong>, defined as</p>
+<p><span class="math display">\[
+\hat{\theta}_{\mathrm{MLE}}=\arg \max _{\theta} L(\theta) \tag{102}
+\]</span></p>
+<p>where the likelihood function is</p>
+<p><span class="math display">\[
+L(\theta)=\prod_{i=1}^{N} p\left(x_{i} \mid \theta\right) \tag{103}
+\]</span></p>
+<p>Equivalently, one may maximize the log-likelihood,</p>
+<p><span class="math display">\[
+\ell(\theta)=\sum_{i=1}^{N} \log p\left(x_{i} \mid \theta\right) \tag{104}
+\]</span></p>
+<p>The <strong>bias</strong> of an estimator quantifies systematic deviation from the true parameter value:</p>
+<p><span class="math display">\[
+\operatorname{Bias}(\hat{\theta})=\mathbb{E}[\hat{\theta}]-\theta \tag{105}
+\]</span></p>
+<p>where the expectation is taken over repeated realizations of the data drawn from <span class="math inline">\(p(x \mid \theta)\)</span>. An estimator is said to be <strong>unbiased</strong> if <span class="math inline">\(\operatorname{Bias}(\hat{\theta})=0\)</span>, and biased otherwise. Bias alone is not sufficient to assess estimator quality, since an unbiased estimator may still have large fluctuations.</p>
+<p>The <strong>variance</strong> of an estimator measures its statistical uncertainty:</p>
+<p><span class="math display">\[
+\operatorname{Var}(\hat{\theta})=\mathbb{E}\left[(\hat{\theta}-\mathbb{E}[\hat{\theta}])^{2}\right] \tag{106}
+\]</span></p>
+<p>A commonly used global measure of estimator performance is the <strong>mean squared error (MSE)</strong>,</p>
+<p><span class="math display">\[
+\operatorname{MSE}(\hat{\theta})=\mathbb{E}_{\theta}\left[(\hat{\theta}-\theta)^{2}\right]=\operatorname{Var}(\hat{\theta})+\operatorname{Bias}(\hat{\theta})^{2} \tag{107}
+\]</span></p>
+<p>This decomposition highlights the trade-off between bias and variance.</p>
+<p>For unbiased estimators, the variance is bounded from below by the <strong>Cramér-Rao lower bound</strong></p>
+<p><span class="math display">\[
+\operatorname{Var}(\hat{\theta}) \geq \frac{1}{I(\theta)} \tag{108}
+\]</span></p>
+<p>where <span class="math inline">\(I(\theta)\)</span> is the <strong>Fisher information</strong>,</p>
+<p><span class="math display">\[
+I(\theta)=\mathbb{E}\left[\left(\frac{\partial}{\partial \theta} \log p(x \mid \theta)\right)^{2}\right] \tag{109}
+\]</span></p>
+<p>An unbiased estimator that attains the Cramér-Rao bound is called <strong>efficient</strong>. In many regular problems, the maximum likelihood estimator becomes asymptotically efficient as the sample size increases.</p>
+<p>An estimator is said to be <strong>consistent</strong> if it converges in probability to the true parameter value as the number of data points grows:</p>
+<p><span class="math display">\[
+\hat{\theta}_{N} \xrightarrow[N \rightarrow \infty]{P} \theta \tag{110}
+\]</span></p>
+<p>Consistency ensures that, with enough data, the estimator recovers the true parameter, regardless of its finite-sample bias or variance. Most maximum likelihood estimators are consistent under mild regularity conditions.</p>
+<p>Unlike Bayesian inference, all the above properties accessing the optimality of the estimator are defined with respect to hypothetical repetitions of the experiment, rather than conditioning on the observed data.</p>
+<p><strong>Example: bias of the maximum likelihood estimator of the variance</strong></p>
+<p>Let <span class="math inline">\(x_{1}, \ldots, x_{N} \sim \mathcal{N}\left(\mu, \sigma^{2}\right)\)</span>. The maximum likelihood estimators are</p>
+<p><span class="math display">\[
+\hat{\mu}=\bar{x}=\frac{1}{N} \sum_{i=1}^{N} x_{i}, \quad \hat{\sigma}^{2}=\frac{1}{N} \sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}
+\]</span></p>
+<p>We want to show the classical result that the maximum likelihood estimator <span class="math inline">\(\hat{\sigma}^{2}\)</span> is biased, with</p>
+<p><span class="math display">\[
+\mathbb{E}\left[\hat{\sigma}^{2}\right]=\frac{N-1}{N} \sigma^{2} .
+\]</span></p>
+<p>Starting from the identity</p>
+<p><span class="math display">\[
+\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}=\sum_{i=1}^{N}\left(x_{i}-\mu\right)^{2}-N(\bar{x}-\mu)^{2} .
+\]</span></p>
+<p>and taking expectations term by term, we obtain</p>
+<p><span class="math display">\[
+\mathbb{E}\left[\sum_{i=1}^{N}\left(x_{i}-\mu\right)^{2}\right]=N \sigma^{2}
+\]</span></p>
+<p>since <span class="math inline">\(x_{i}-\mu \sim \mathcal{N}\left(0, \sigma^{2}\right)\)</span>, and</p>
+<p><span class="math display">\[
+\mathbb{E}\left[N(\bar{x}-\mu)^{2}\right]=N \operatorname{Var}(\bar{x})=\sigma^{2}
+\]</span></p>
+<p>since <span class="math inline">\(\bar{x} \sim \mathcal{N}\left(\mu, \sigma^{2} / N\right)\)</span>. Combining the two results yields</p>
+<p><span class="math display">\[
+\mathbb{E}\left[\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}\right]=(N-1) \sigma^{2}
+\]</span></p>
+<p>Dividing by <span class="math inline">\(N\)</span> concludes the proof:</p>
+<p><span class="math display">\[
+\mathbb{E}\left[\hat{\sigma}^{2}\right]=\frac{1}{N} \mathbb{E}\left[\sum_{i=1}^{N}\left(x_{i}-\bar{x}\right)^{2}\right]=\frac{N-1}{N} \sigma^{2}
+\]</span></p>
+<p>The bias originates from estimating the mean <span class="math inline">\(\mu\)</span> from the same data used to estimate the variance, effectively removing one degree of freedom. The bias vanishes as <span class="math inline">\(N \rightarrow \infty\)</span>, so <span class="math inline">\(\hat{\sigma}^{2}\)</span> is a consistent estimator.</p>
+<section id="confidence-intervals-vs-credible-intervals" class="level3" data-number="14.5.1">
+<h3 data-number="14.5.1" class="anchored" data-anchor-id="confidence-intervals-vs-credible-intervals"><span class="header-section-number">14.5.1</span> Confidence intervals vs credible intervals</h3>
+<p>In frequentist language, let <span class="math inline">\(X\)</span> denote the observed data, modeled as a random variable with distribution <span class="math inline">\(p_{\theta}(X)\)</span> depending on an unknown parameter <span class="math inline">\(\theta\)</span> living in the parametric space <span class="math inline">\(\Theta\)</span>. A confidence interval is a random set</p>
+<p><span class="math display">\[
+C(X) \subset \Theta
+\]</span></p>
+<p>since it is a function of the random data <span class="math inline">\(X\)</span>. The parameter <span class="math inline">\(\theta\)</span> itself is treated as fixed but unknown.</p>
+<p>A confidence interval procedure <span class="math inline">\(C(X)\)</span> is said to have coverage probability <span class="math inline">\(1-\alpha\)</span> if</p>
+<p><span class="math display">\[
+\mathbb{P}(\theta \in C(X))=1-\alpha \quad \text { for all } \theta \in \Theta . \tag{111}
+\]</span></p>
+<p>The probability is taken with respect to the sampling distribution of the data <span class="math inline">\(X\)</span>, while the parameter <span class="math inline">\(\theta\)</span> is held fixed. Coverage is thus a statement about repeated sampling: The experiment is repeated many times, each time new data <span class="math inline">\(X\)</span> are generated from <span class="math inline">\(p_{\theta}(X)\)</span>, a new confidence interval <span class="math inline">\(C(X)\)</span> is constructed. If the procedure has <span class="math inline">\(95 \%\)</span> coverage, then in the long run, <span class="math inline">\(95 \%\)</span> of the constructed intervals will contain the true value of <span class="math inline">\(\theta\)</span>.</p>
+<p>Coverage does not imply the conditional probability statement</p>
+<p><span class="math display">\[
+\mathbb{P}(\theta \in C \mid X=x)=1-\alpha
+\]</span></p>
+<p>Such a statement is meaningless in the frequentist framework, because the parameter <span class="math inline">\(\theta\)</span> is not a random variable and probability statements are not conditioned on the observed data. Once the data <span class="math inline">\(x\)</span> are observed, the interval <span class="math inline">\(C(x)\)</span> either contains <span class="math inline">\(\theta\)</span> or it does not.</p>
+<p>As an example, take the normal distribution for the mean with known variance, namely, let <span class="math inline">\(X_{1}, \ldots, X_{n} \sim \mathcal{N}\left(\mu, \sigma^{2}\right)\)</span> with known <span class="math inline">\(\sigma\)</span>. A <span class="math inline">\(1-\alpha\)</span> confidence interval for <span class="math inline">\(\mu\)</span> is</p>
+<p><span class="math display">\[
+C(X)=\bar{X} \pm z_{1-\alpha / 2} \frac{\sigma}{\sqrt{n}}
+\]</span></p>
+<p>where <span class="math inline">\(z_{1-\alpha / 2}\)</span> is the <span class="math inline">\((1-\alpha / 2)\)</span> quantile of the standard normal distribution <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. This interval satisfies the coverage property:</p>
+<p><span class="math display">\[
+\mathbb{P}\left(\mu \in \bar{X} \pm z_{1-\alpha / 2} \frac{\sigma}{\sqrt{n}}\right)=1-\alpha . \tag{112}
+\]</span></p>
+<p>In Bayesian inference, <span class="math inline">\(\theta\)</span> is treated as a random variable with posterior distribution <span class="math inline">\(p(\theta \mid X)\)</span>. A Bayesian credible interval may or may not satisfy frequentist coverage. In special cases (e.g.&nbsp;conjugate priors, large samples), credible intervals may have approximate frequentist coverage (e.g.&nbsp;Bernstein-von Mises theorem). All in all, coverage is a property of the interval-producing procedure, not of a single realized interval.</p>
+</section>
+</section>
+<section id="prediction" class="level2" data-number="14.6">
+<h2 data-number="14.6" class="anchored" data-anchor-id="prediction"><span class="header-section-number">14.6</span> Prediction</h2>
+<p>In Bayesian inference, all sources of uncertainty are represented probabilistically. Model parameters are treated as random variables, and inference proceeds by updating prior beliefs in light of observed data. A central object in this framework is the <strong>posterior predictive distribution</strong>, which governs predictions for future observations.</p>
+<p>Prediction for a new observation <span class="math inline">\(x_{\text {new }}\)</span> is obtained by marginalizing over the posterior distribution of the parameters:</p>
+<p><span class="math display">\[
+p\left(x_{\mathrm{new}} \mid x\right)=\int p\left(x_{\mathrm{new}} \mid \theta\right) p(\theta \mid x) d \theta \tag{113}
+\]</span></p>
+<p>This distribution is referred to as the <strong>posterior predictive distribution</strong>. It is a genuine probability distribution on the space of future data, conditioned only on the observations <span class="math inline">\(x\)</span>, with the parameter <span class="math inline">\(\theta\)</span> fully integrated out.</p>
+<p>From a probabilistic standpoint, the predictive distribution follows directly from the joint model</p>
+<p><span class="math display">\[
+p\left(x_{\text {new }}, \theta \mid x\right)=\underbrace{p\left(x_{\text {new }} \mid \theta\right)}_{\text {likelihood calculated on new points }} \times \underbrace{p(\theta \mid x)}_{\text {posterior }},
+\]</span></p>
+<p>by marginalization over <span class="math inline">\(\theta\)</span>. No point estimate of the parameters is required at any stage.</p>
+<p>A key conceptual feature of Bayesian inference is that uncertainty in the model parameters is automatically propagated to predictions. Since <span class="math inline">\(p(\theta \mid x)\)</span> typically has nonzero variance, predictions for <span class="math inline">\(x_{\text {new }}\)</span> incorporate both intrinsic data variability and parameter uncertainty.</p>
+<p>To make this explicit, consider a model in which the conditional variance of <span class="math inline">\(x_{\text {new }}\)</span> given <span class="math inline">\(\theta\)</span> is finite. The total predictive variance satisfies the <strong>law of total variance</strong>,</p>
+<p><span class="math display">\[
+\operatorname{Var}\left(x_{\text {new }} \mid x\right)=\mathbb{E}_{\theta \mid x}\left[\operatorname{Var}\left(x_{\text {new }} \mid \theta\right)\right]+\operatorname{Var}_{\theta \mid x}\left[\mathbb{E}\left(x_{\text {new }} \mid \theta\right)\right]
+\]</span></p>
+<p>The first term reflects irreducible noise in the data-generating process, while the second term quantifies uncertainty due to incomplete knowledge of the parameters. Both contributions are present automatically in the Bayesian predictive distribution. By contrast, predictive schemes based on point estimates <span class="math inline">\(\hat{\theta}(x)\)</span> typically replace <span class="math inline">\(p\left(x_{\text {new }} \mid x\right)\)</span> with <span class="math inline">\(p\left(x_{\text {new }} \mid \hat{\theta}\right)\)</span>, thereby discarding the second contribution. In the Bayesian framework, no such approximation is made: the predictive distribution remains valid even in regimes of limited data or weak identifiability.</p>
+<p>More generally, Bayesian prediction is invariant under reparameterization and naturally extends to hierarchical and latent-variable models, where multiple layers of uncertainty are integrated out through successive marginalizations. This makes the predictive distribution the fundamental object of inference, rather than parameter estimates themselves.</p>
+</section>
+<section id="comparing-to-prediction-in-the-frequentist-paradigm" class="level2" data-number="14.7">
+<h2 data-number="14.7" class="anchored" data-anchor-id="comparing-to-prediction-in-the-frequentist-paradigm"><span class="header-section-number">14.7</span> Comparing to prediction in the frequentist paradigm</h2>
+<p>In the frequentist framework, prediction is formulated in terms of the sampling distribution of future observations, conditional on unknown but fixed model parameters. Since parameters are not treated as random variables, uncertainty about their values cannot be integrated out. Instead, prediction typically relies on point estimates and procedures designed to achieve correct long-run coverage under repeated sampling.</p>
+<p>Let <span class="math inline">\(x=\left(x_{1}, \ldots, x_{n}\right)\)</span> denote observed data drawn from a model <span class="math inline">\(p(x \mid \theta)\)</span>, with <span class="math inline">\(\theta \in \Theta\)</span> fixed but unknown. A future observation <span class="math inline">\(x_{\text {new }}\)</span> is assumed to be generated from the same conditional distribution <span class="math inline">\(p\left(x_{\text {new }} \mid \theta\right)\)</span>. A common frequentist approach to prediction is the <strong>plug-in principle</strong> <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>, whereby <span class="math inline">\(\theta\)</span> is replaced by an estimator <span class="math inline">\(\hat{\theta}(x)\)</span>, yielding the predictive distribution</p>
+<p><span class="math display">\[
+p_{\text {plug }}\left(x_{\text {new }} \mid x\right)=p\left(x_{\text {new }} \mid \hat{\theta}(x)\right)
+\]</span></p>
+<p>This distribution is interpreted as an approximation to the true sampling distribution of <span class="math inline">\(x_{\text {new }}\)</span> under the unknown parameter value. The validity of plug-in prediction is assessed indirectly through the sampling properties of <span class="math inline">\(\hat{\theta}\)</span>, such as consistency and asymptotic normality. In large samples, <span class="math inline">\(p\left(x_{\text {new }} \mid \hat{\theta}\right)\)</span> typically converges to the true conditional distribution <span class="math inline">\(p\left(x_{\text {new }} \mid \theta\right)\)</span>, but for finite samples it neglects the uncertainty associated with estimating <span class="math inline">\(\theta\)</span>.</p>
+<p>Rather than focusing on full predictive distributions, frequentist prediction often centers on the construction of <strong>prediction intervals</strong>. A prediction interval <span class="math inline">\(\mathcal{I}(x)\)</span> for <span class="math inline">\(x_{\text {new }}\)</span> is a data-dependent set satisfying the coverage condition</p>
+<p><span class="math display">\[
+\mathbb{P}_{\theta}\left(x_{\text {new }} \in \mathcal{I}(X)\right) \geq 1-\alpha \quad \text { for all } \theta \in \Theta
+\]</span></p>
+<p>where the probability is taken with respect to the joint sampling distribution of the observed data <span class="math inline">\(X\)</span> and the future observation <span class="math inline">\(x_{\text {new }}\)</span>.</p>
+<p>The defining property of a frequentist prediction interval is therefore its long-run coverage: over repeated realizations of the experiment, a proportion at least <span class="math inline">\(1-\alpha\)</span> of intervals constructed in this way will contain the future observation. This guarantee holds regardless of the realized value of <span class="math inline">\(\theta\)</span>, provided the model assumptions are satisfied. In practice, prediction intervals are often derived using asymptotic approximations. For example, if <span class="math inline">\(\hat{\theta}\)</span> is asymptotically normal,</p>
+<p><span class="math display">\[
+\sqrt{n}(\hat{\theta}-\theta) \xrightarrow{d} \mathcal{N}\left(0, \sigma^{2}\right),
+\]</span></p>
+<p>then an approximate prediction interval for <span class="math inline">\(x_{\text {new }}\)</span> can be constructed by combining the variability of <span class="math inline">\(p\left(x_{\text {new }} \mid \theta\right)\)</span> with the estimated sampling variability of <span class="math inline">\(\hat{\theta}\)</span>.</p>
+<p>Unlike Bayesian credible intervals for predictions, frequentist prediction intervals are not interpreted as probability statements conditional on the observed data. Instead, their meaning is entirely operational: they control the frequency of correct predictions under repeated sampling.</p>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>In the frequentist setting, the risk is defined as an expectation with respect to the sampling distribution of the data: <span class="math display">\[R(\theta, \hat{\theta})=\mathbb{E}_{X \mid \theta}[L(\hat{\theta}(X), \theta)] \tag{87}\]</span> Here the parameter <span class="math inline">\(\theta\)</span> is treated as fixed but unknown, and the risk measures the long-run average performance of the estimator under repeated sampling from the model indexed by <span class="math inline">\(\theta\)</span>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><span class="math inline">\(z_{1-\alpha / 2}\)</span> is the number such that a standard normal random variable is less than or equal to it with probability <span class="math inline">\(1-\alpha / 2\)</span>. For <span class="math inline">\(\alpha=0.05\)</span>, <span class="math inline">\(z_{1-\alpha / 2}=1.96\)</span>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>The plug-in principle says that a feature of a given distribution can be approximated by the same feature of the empirical distribution of a sample of observations drawn from the given distribution.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../chapters/03-distributions.html" class="pagination-link" aria-label="The Typical Animals Encountered in the Statistical Zoo">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">The Typical Animals Encountered in the Statistical Zoo</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../chapters/05-applications.html" class="pagination-link" aria-label="Selected Applications">
+        <span class="nav-page-text"><span class="chapter-number">15</span>&nbsp; <span class="chapter-title">Selected Applications</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
